@@ -26,7 +26,7 @@ spec:
       - image: gcr.io/GOOGLE_CLOUD_PROJECT/pumba-ui:COMMIT_SHA
         name: pumba-ui
         ports:
-        - containerPort: 5000
+        - containerPort: 80
           protocol: TCP
         resources:
           requests:
