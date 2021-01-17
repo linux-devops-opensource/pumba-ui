@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { HashRouter, Route, Switch, Router  } from 'react-router';
+import 'react-fontawesome'
+// import '@fortawesome/fontawesome-free/css/all.min.css'
 
-function App() {
+// Containers
+const TheLayout = React.lazy(() => import('./containers/Layout/Layout'));
+
+const App = (props) => {
+
+  React.useEffect(() => {
+      
+  }, []);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+        <Router> 
+            <React.Suspense>
+              {/* <Switch>               */}
+                  <Route path="/" name="Home" render={props => <TheLayout {...props}/>} /> 
+        
+              {/* </Switch> */}
+            </React.Suspense>
+         </Router>
+        
+    );
+  }
 
-export default App;
+export default (App);
