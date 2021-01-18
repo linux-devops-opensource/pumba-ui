@@ -18,7 +18,7 @@ let stepsw = [
         Verifier: verify1
     },
     {
-        Name: 'Select Artifactory',
+        Name: 'Select Repository Manager',
         After_Display: 'after 2',
         Display: <RepositorySelection/>,        
         Verifier: verify1

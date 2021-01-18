@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import nexusImg from '../../images/nexus.svg';
 import artifactoryImg from '../../images/artifactory.png';
@@ -9,10 +11,12 @@ const images = [
   {
     source: nexusImg,
     title: 'nexus',
+    host: 'nexus.app.com'
   },
   {
     source: artifactoryImg,
     title: 'artifactory',
+    host: 'artifactory.app.az.com'
   }
 ];
 
@@ -23,9 +27,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   image: {
-    position: 'relative',
-    height: 60,
-    width: 60,
+    height: 100,
+    width: 100,
     '&:hover, &$focusVisible': {
       zIndex: 1,
       '& $imageBackdrop': {
@@ -36,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  text: {
+    'font-weight': 'bold',
+  }
 }));
 
 export default function RepositorySelection() {
@@ -45,7 +51,12 @@ export default function RepositorySelection() {
     <div className={classes.root}>
         {images.map((image) => (
             <Button variant="contained">
+            <div>
                 <img src={image.source} key={image.title} className={classes.image}/>
+                <Typography variant="h6" className={classes.text}>
+                  {image.host}
+                </Typography>
+                </div>
             </Button>
         ))}
     </div>
