@@ -96,6 +96,7 @@ const Home = (props) => {
 
   return (
     <div className={classes.root}>
+
       <TechnologiesSelection/>
 
       <Stepper activeStep={activeStep} orientation="vertical">
