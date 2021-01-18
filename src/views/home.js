@@ -96,7 +96,7 @@ const Home = (props) => {
 
   return (
     <div className={classes.root}>
-            {/* <TechnologiesSelection/> */}
+      <TechnologiesSelection/>
 
       <Stepper activeStep={activeStep} orientation="vertical">
         {stepsw.map((label, index) => (
