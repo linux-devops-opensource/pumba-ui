@@ -13,7 +13,7 @@ let stepsw = [
     {
         Name: "Select Technology",
         After_Display: "after 1",
-        Display: 'asd',
+        Display: <TechnologiesSelection/>,
         Verifier: verify1
     },
     {
@@ -97,8 +97,6 @@ const Home = (props) => {
   return (
     <div className={classes.root}>
 
-      <TechnologiesSelection/>
-
       <Stepper activeStep={activeStep} orientation="vertical">
         {stepsw.map((label, index) => (
           <Step key={label.Name}>
@@ -112,7 +110,7 @@ const Home = (props) => {
             </StepLabel>
             
             <StepContent>              
-              {label.Display}
+            {label.Display}
               <div className={classes.actionsContainer}>
                 <div>
                   <Button

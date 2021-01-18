@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Helper() {
+export default function TechnologiesSelection() {
   const classes = useStyles();
 
   return (
