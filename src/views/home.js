@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TechnologiesSelection from '../components/Uploader/technologiesSelection'
+import RepositorySelection from '../components/Uploader/repositorySelection'
 
 let stepsw = [
     {
@@ -19,7 +20,7 @@ let stepsw = [
     {
         Name: 'Select Artifactory',
         After_Display: 'after 2',
-        Display: TechnologiesSelection,        
+        Display: <RepositorySelection/>,        
         Verifier: verify1
     },
     {
