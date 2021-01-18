@@ -7,41 +7,6 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import TechnologiesSelection from '../components/Uploader/technologiesSelection'
-
-let stepsw = [
-    {
-        Name: "Select Technology",
-        After_Display: "after 1",
-        Display: 'asd',
-        Verifier: verify1
-    },
-    {
-        Name: 'Select Artifactory',
-        After_Display: 'after 2',
-        Display: TechnologiesSelection,        
-        Verifier: verify1
-    },
-    {
-        Name: 'Duplication Check',
-        After_Display: 'after 3',
-        Display: TechnologiesSelection,        
-        Verifier: verify1
-    },
-    {
-        Name: 'Dependencie Check',
-        After_Display: 'after 4',
-        Display: TechnologiesSelection,        
-        Verifier: verify1
-    },
-    {
-        Name: 'Verify',
-        After_Display: 'after 5',
-        Display: TechnologiesSelection,        
-        Verifier: verify1
-    }
-
-]
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,7 +31,21 @@ function getSteps() {
 function verify1() {
     return true
 }
+let stepsw = [
+    {
+        Name: "Select Technology",
+        After_Display: 'after 1',
+        Display: "dis1",
+        Verifier: verify1
+    },
+    {
+        Name: 'Verify Technology',
+        After_Display: 'after 2',
+        Display: 'dis2',
+        Verifier: verify1
+    }
 
+]
 
 function getStepss() {
     return stepsw
@@ -96,22 +75,20 @@ const Home = (props) => {
 
   return (
     <div className={classes.root}>
-            {/* <TechnologiesSelection/> */}
-
       <Stepper activeStep={activeStep} orientation="vertical">
         {stepsw.map((label, index) => (
           <Step key={label.Name}>
             <StepLabel>
                 <div>
-                {label.Name}
-                {index < activeStep ? label.After_Display : ''}
+
                 </div>
                 
-                
+                {label.Name}
             </StepLabel>
             
-            <StepContent>              
-              {label.Display}
+            <StepContent>
+              <Typography></Typography>
+              <Typography>{label.Display}</Typography>
               <div className={classes.actionsContainer}>
                 <div>
                   <Button

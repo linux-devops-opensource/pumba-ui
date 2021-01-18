@@ -9,10 +9,6 @@ import lightGreen from "@material-ui/core/colors/lightGreen";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import MuiTheme from './theme';
 import { render } from 'react-dom'
-
-
-// Get the application-wide store instance, prepopulating with state from the server where available.
-const initialState = window.initialReduxState;
   
   ReactDOM.render(
     <React.StrictMode>
