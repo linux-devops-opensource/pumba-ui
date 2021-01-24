@@ -8,7 +8,11 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TechnologiesSelection from '../components/Uploader/technologiesSelection'
+<<<<<<< HEAD
 import RepositorySelection from '../components/Uploader/repositorySelection'
+=======
+import FileUpload from '../components/DuplactionCheck/fileUpload'
+>>>>>>> yuval
 
 let stepsw = [
     {
@@ -97,7 +101,12 @@ const Home = (props) => {
 
   return (
     <div className={classes.root}>
+<<<<<<< HEAD
 
+=======
+            {/* <TechnologiesSelection/> */}
+    <FileUpload/>
+>>>>>>> yuval
       <Stepper activeStep={activeStep} orientation="vertical">
         {stepsw.map((label, index) => (
           <Step key={label.Name}>
