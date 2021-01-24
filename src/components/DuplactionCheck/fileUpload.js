@@ -5,6 +5,7 @@ import {DropzoneDialog} from 'material-ui-dropzone'
 import CryptoJS from 'crypto-js';
 import Button from '@material-ui/core/Button'
 import {setHashedPackages} from '../../store/actions/hashedPackagesActions'
+import {fetchDuplicationCheck} from '../../store/actions/servicesFetchingActions'
 import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => createStyles({
@@ -61,10 +62,8 @@ const FileUpload = (props) => {
     }   
   }, [props.hashedPackages]);
    React.useEffect(() => {
-      if (proccessedPackages.length == files.length && proccessedPackages.length > 0) {
-          alert("zulbaaa")
-      }   
-    }, [proccessedPackages]);
+    props.fetchDuplicationCheck(props.hashedPackages)
+  }, [props.hashedPackages.length]);
 
    
    return (
@@ -107,7 +106,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setHashedPackages: (newPackage, packagesArray) => dispatch(setHashedPackages(newPackage, packagesArray)),
-      
+
+    fetchDuplicationCheck: (uploadedPackages) => dispatch(fetchDuplicationCheck(uploadedPackages)),
+
+     
   };
 };
 
