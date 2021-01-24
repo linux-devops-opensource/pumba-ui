@@ -68,16 +68,8 @@ const FileUpload = (props) => {
    
    return (
     <div>
-      {props.hashedPackages.length}
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        onClick={handleOpen}
-      >
-        Add Image
-      </Button>
-      <DropzoneDialog
+      
+      <DropzoneArea
         open={open}
         onSave={handleSave}
         showPreviews={false}
@@ -87,10 +79,8 @@ const FileUpload = (props) => {
         submitButtonText={"Submit"}
         showFileNamesInPreview={true}
         dialogTitle={"Duplicate checker"}
-        dropzoneText={"bla?"}
-      />
-      {packages.length}
-      {proccessedPackages.length != 0 ? 'blaaa' : 'mimi' }
+        dropzoneText={"Upload your packages"}
+      />      
 
     </div>
    )

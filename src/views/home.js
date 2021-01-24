@@ -8,11 +8,8 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TechnologiesSelection from '../components/Uploader/technologiesSelection'
-<<<<<<< HEAD
 import RepositorySelection from '../components/Uploader/repositorySelection'
-=======
 import FileUpload from '../components/DuplactionCheck/fileUpload'
->>>>>>> yuval
 
 let stepsw = [
     {
@@ -30,13 +27,13 @@ let stepsw = [
     {
         Name: 'Duplication Check',
         After_Display: 'after 3',
-        Display: TechnologiesSelection,        
+        Display: <FileUpload/>,        
         Verifier: verify1
     },
     {
         Name: 'Dependencie Check',
         After_Display: 'after 4',
-        Display: TechnologiesSelection,        
+        Display: <fileUpload/>,        
         Verifier: verify1
     },
     {
@@ -101,12 +98,6 @@ const Home = (props) => {
 
   return (
     <div className={classes.root}>
-<<<<<<< HEAD
-
-=======
-            {/* <TechnologiesSelection/> */}
-    <FileUpload/>
->>>>>>> yuval
       <Stepper activeStep={activeStep} orientation="vertical">
         {stepsw.map((label, index) => (
           <Step key={label.Name}>
