@@ -1,12 +1,11 @@
-import React from 'react'
+import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import {DropzoneArea} from 'material-ui-dropzone'
-import {DropzoneDialog} from 'material-ui-dropzone'
 import CryptoJS from 'crypto-js';
-import Button from '@material-ui/core/Button'
-import {setHashedPackages} from '../../store/actions/hashedPackagesActions'
-import {fetchDuplicationCheck} from '../../store/actions/servicesFetchingActions'
+import { DropzoneArea } from 'material-ui-dropzone';
+import React from 'react';
 import { connect } from "react-redux";
+import { setHashedPackages } from '../../store/actions/hashedPackagesActions';
+import { fetchDuplicationCheck } from '../../store/actions/servicesFetchingActions';
 
 const useStyles = makeStyles(theme => createStyles({
   previewChip: {
@@ -34,6 +33,21 @@ const FileUpload = (props) => {
   let packages = []
 
   const  handleSave = (files, event) => {  
+   
+    props.fetchDuplicationCheck(props.hashedPackages)
+  };
+   
+
+
+  React.useEffect(() => {    
+    props.fetchDuplicationCheck(props.hashedPackages)
+  }, [props.hashedPackages.length > 0]);
+
+  React.useEffect(() => {
+    
+  }, []);
+
+  const handleDrop = (files, event) => {  
     files.forEach(function (item) {
       var reader = new FileReader();
       reader.onload = e =>  {
@@ -45,33 +59,21 @@ const FileUpload = (props) => {
         let newPackage = {packageName: item.name, sha1: finalSha}
         newPackagesArr.push({packageName: item.name, sha1: finalSha})
         setProccessedPackages(newPackagesArr)
-        setHashedPackages(newPackage, props.hashedPackages)
+        props.setHashedPackages(newPackage, props.hashedPackages)
         setOpen(open => false)
       };
       reader.readAsArrayBuffer(item);
     })
-  
-  };
-   
 
-
-  React.useEffect(() => {
-    if (proccessedPackages.length == files.length && proccessedPackages.length > 0) {
-        alert("zulbaaa")
-    }   
-  }, [props.hashedPackages]);
-
-  React.useEffect(() => {
-    props.fetchDuplicationCheck(props.hashedPackages)
-  }, [props.hashedPackages.length]);
-
-   
+  }
   return (
     <div>
-      
+      <Button onClick={() => {     props.fetchDuplicationCheck(props.hashedPackages)
+ }}>check</Button>
+
       <DropzoneArea
         open={open}
-        onSave={handleSave}
+        onDrop={handleDrop}
         showPreviews={false}
         maxFileSize={5000000}
         onClose={handleClose}

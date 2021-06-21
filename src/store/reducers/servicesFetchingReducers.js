@@ -20,9 +20,14 @@ export function loadingItemsCount(state = 0, action) {
   }
 }
 
-export function duplicationCheck(state = [], action) {
+
+const defaultState = {
+  "finished": false,
+  "succeded": false
+}
+export function duplicationCheck(state = defaultState, action) {
   switch (action.type) {
-      case 'DUPLICATION_FETCH_SUCCESS':
+      case 'DUPLICATION_FETCH':
           return action.items;
 
       default:
@@ -30,3 +35,12 @@ export function duplicationCheck(state = [], action) {
   }
 }
 
+export function dependencyCheck(state = defaultState, action) {
+  switch (action.type) {
+      case 'DEPENDENCY_FETCH':
+          return action.items;
+
+      default:
+          return state;
+  }
+}

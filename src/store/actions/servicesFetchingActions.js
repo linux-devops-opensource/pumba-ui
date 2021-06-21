@@ -25,13 +25,24 @@ export function itemsFetchDataSuccess(items, requestOption) {
       
 }
 
-export function fetchDuplicationCheck(uploadedPackages) {
+export function fetchDependencyCheck(uploadedPackages) {
   let url = 'http://51.124.62.119:3000/api/checkpackages'
   let payload = {
-    type: 'pypi',
     packages: uploadedPackages
   }
-  let requestOption = 'DUPLICATION_FETCH_SUCCESS'
+  let requestOption = 'DUPLICATION_FETCH'
+  return (dispatch) => {
+      dispatch(fetchDataPost(url, requestOption, payload))
+  }
+}
+
+export function fetchDuplicationCheck(hashedPackages) {
+  let url = 'http://51.124.62.119:3000/api/checkpackages'
+  let payload = {
+    type: 'npm',
+    packages: hashedPackages
+  }
+  let requestOption = 'DUPLICATION_FETCH'
   return (dispatch) => {
       dispatch(fetchDataPost(url, requestOption, payload))
   }

@@ -1,15 +1,16 @@
-export function set(hostsList) {
+export function set(hashedPackages) {
     return {
         type: 'SET_HASHED_PACKAGES',
-        hostsList
+        hashedPackages
     }
         
 }
 
 export function setHashedPackages(newPackageArray, oldPackageArray) {
-    let hashedPackages = oldPackageArray.push(newPackageArray)
+    let hashedPackages = oldPackageArray
+    hashedPackages.push(newPackageArray)
     return (dispatch) => {
-        dispatch(set({hashedPackages: hashedPackages}));        
+        dispatch(set(hashedPackages));        
     };
 
 }
