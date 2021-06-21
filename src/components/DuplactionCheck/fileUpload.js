@@ -17,24 +17,24 @@ const useStyles = makeStyles(theme => createStyles({
 
 const FileUpload = (props) => {
   //  const [files, setFiles] = React.useState([])
-   const classes = useStyles();
+  const classes = useStyles();
 
-   const [open, setOpen] = React.useState(false);
-   const [files, setFiles] = React.useState([])
-   const [proccessedPackages, setProccessedPackages] = React.useState([])
+  const [open, setOpen] = React.useState(false);
+  const [files, setFiles] = React.useState([])
+  const [proccessedPackages, setProccessedPackages] = React.useState([])
 
-   const handleOpen = () => {
-     setOpen(open => true)
-     
-   };
- 
-   const handleClose = () => {
+  const handleOpen = () => {
+    setOpen(open => true)
+  };
+
+  const handleClose = () => {
     setOpen(open => false)
-   };
-   let packages = []
+  };
 
-    const  handleSave = (files, event) => {  
-      files.forEach(function (item) {
+  let packages = []
+
+  const  handleSave = (files, event) => {  
+    files.forEach(function (item) {
       var reader = new FileReader();
       reader.onload = e =>  {
         var file_result = e.result; // this == reader, get the loaded file "result"
@@ -50,23 +50,23 @@ const FileUpload = (props) => {
       };
       reader.readAsArrayBuffer(item);
     })
-    
-	
-   };
+  
+  };
    
 
 
-   React.useEffect(() => {
+  React.useEffect(() => {
     if (proccessedPackages.length == files.length && proccessedPackages.length > 0) {
         alert("zulbaaa")
     }   
   }, [props.hashedPackages]);
-   React.useEffect(() => {
+
+  React.useEffect(() => {
     props.fetchDuplicationCheck(props.hashedPackages)
   }, [props.hashedPackages.length]);
 
    
-   return (
+  return (
     <div>
       
       <DropzoneArea
@@ -83,7 +83,7 @@ const FileUpload = (props) => {
       />      
 
     </div>
-   )
+  )
     
 }
 
@@ -96,10 +96,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setHashedPackages: (newPackage, packagesArray) => dispatch(setHashedPackages(newPackage, packagesArray)),
-
     fetchDuplicationCheck: (uploadedPackages) => dispatch(fetchDuplicationCheck(uploadedPackages)),
-
-     
   };
 };
 

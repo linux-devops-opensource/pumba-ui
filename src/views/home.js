@@ -14,31 +14,25 @@ import FileUpload from '../components/DuplactionCheck/fileUpload'
 let stepsw = [
     {
         Name: "Select Technology",
-        After_Display: "after 1",
+        After_Display: "",
         Display: <TechnologiesSelection/>,
         Verifier: verify1
     },
     {
         Name: 'Select Repository Manager',
-        After_Display: 'after 2',
+        After_Display: '',
         Display: <RepositorySelection/>,        
         Verifier: verify1
     },
     {
-        Name: 'Duplication Check',
-        After_Display: 'after 3',
+        Name: 'Upload packages',
+        After_Display: '',
         Display: <FileUpload/>,        
         Verifier: verify1
     },
     {
-        Name: 'Dependencie Check',
-        After_Display: 'after 4',
-        Display: <fileUpload/>,        
-        Verifier: verify1
-    },
-    {
         Name: 'Verify',
-        After_Display: 'after 5',
+        After_Display: '',
         Display: TechnologiesSelection,        
         Verifier: verify1
     }
@@ -62,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Select Technology', 'Select Artifactory', 'Drag Files'];
+  return stepsw
 }
 
 function verify1() {
@@ -70,20 +64,16 @@ function verify1() {
 }
 
 
-function getStepss() {
-    return stepsw
-}
-
 
 const Home = (props) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  stepsw = getStepss()
+  stepsw = getSteps()
 
   const handleNext = () => {
     if (stepsw[activeStep].Verifier()) {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-}   
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }   
   };
 
   const handleBack = () => {    
@@ -106,8 +96,6 @@ const Home = (props) => {
                 {label.Name}
                 {index < activeStep ? label.After_Display : ''}
                 </div>
-                
-                
             </StepLabel>
             
             <StepContent>              
