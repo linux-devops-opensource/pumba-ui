@@ -1,16 +1,15 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Step from '@material-ui/core/Step';
+import StepContent from '@material-ui/core/StepContent';
+import StepLabel from '@material-ui/core/StepLabel';
+import Stepper from '@material-ui/core/Stepper';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import TechnologiesSelection from '../components/Uploader/technologiesSelection'
-import RepositorySelection from '../components/Uploader/repositorySelection'
-import FileUpload from '../components/DuplactionCheck/fileUpload'
-
+import React from 'react';
+import FileUpload from '../components/DuplactionCheck/fileUpload';
+import Results from '../components/Results/results';
+import TechnologiesSelection from '../components/Uploader/technologiesSelection';
 let stepsw = [
     {
         Name: "Select Technology",
@@ -18,12 +17,12 @@ let stepsw = [
         Display: <TechnologiesSelection/>,
         Verifier: verify1
     },
-    {
-        Name: 'Select Repository Manager',
-        After_Display: '',
-        Display: <RepositorySelection/>,        
-        Verifier: verify1
-    },
+    // {
+    //     Name: 'Select Repository Manager',
+    //     After_Display: '',
+    //     Display: <RepositorySelection/>,        
+    //     Verifier: verify1
+    // },
     {
         Name: 'Upload packages',
         After_Display: '',
@@ -31,9 +30,9 @@ let stepsw = [
         Verifier: verify1
     },
     {
-        Name: 'Verify',
+        Name: 'Results',
         After_Display: '',
-        Display: TechnologiesSelection,        
+        Display: <Results/>,        
         Verifier: verify1
     }
 
@@ -86,6 +85,11 @@ const Home = (props) => {
     setActiveStep(0);
   };
 
+  const handleFinish = () => {
+    window.location.reload()
+
+  };
+
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep} orientation="vertical">
@@ -102,7 +106,20 @@ const Home = (props) => {
             {label.Display}
               <div className={classes.actionsContainer}>
                 <div>
-                  <Button
+                    {activeStep === stepsw.length - 1 ? 
+                    <div>
+                      <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleFinish}
+                    className={classes.button}
+                  >
+                     Refresh
+                  </Button>
+                    </div> 
+                    :
+                    <div>
+                      <Button
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     className={classes.button}
@@ -115,8 +132,13 @@ const Home = (props) => {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === stepsw.length - 1 ? 'Finish' : 'Next'}
+                     Next
                   </Button>
+
+                    </div> }          
+                      
+                 
+                
                 </div>
               </div>
             </StepContent>

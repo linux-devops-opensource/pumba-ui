@@ -1,36 +1,41 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-
-import pypiImg from '../../images/pypi.png';
+import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import mavenImg from '../../images/maven.png';
-import rpmImg from '../../images/rpm.png';
 import npmImg from '../../images/npm.png';
+import pypiImg from '../../images/pypi.png';
+import rpmImg from '../../images/rpm.png';
+import { setTechlonogySelection } from '../../store/actions/techlonogySelectionActions'
+import { connect } from "react-redux";
 
 const images = [
   {
     source: pypiImg,
-    title: 'Pypi',
+    title: 'pypi',
   },
   {
     source: mavenImg,
-    title: 'Maven',
+    title: 'maven',
   },
   {
     source: rpmImg,
-    title: 'RPM',
+    title: 'rpm',
   },
   {
     source: npmImg,
-    title: 'NPM',
+    title: 'npm',
   }
 ];
 
 const useStyles = makeStyles((theme) => ({
+
   root: {
     '& > *': {
       margin: theme.spacing(1),
     },
+  },
+  selectedOption: {
+    backgroundColor: "#4287f5"
   },
   image: {
     position: 'relative',
@@ -48,16 +53,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TechnologiesSelection() {
+const TechnologiesSelection = (props) => {
   const classes = useStyles();
 
+  const updateStore = (techlonogy) => {
+    props.setTechlonogySelection(techlonogy)
+  }
   return (
     <div className={classes.root}>
         {images.map((image) => (
-            <Button variant="contained">
+            <Button variant="contained" color={props.technologySelected == image.title ? "primary" : ""} onClick={ () => updateStore(image.title)}>
                 <img src={image.source} key={image.title} className={classes.image}/>
             </Button>
         ))}
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    technologySelected: state.technologySelected
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {        
+    setTechlonogySelection: (techlonogy) => dispatch(setTechlonogySelection(techlonogy)),
+
+  };
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (TechnologiesSelection)
