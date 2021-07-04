@@ -1,67 +1,87 @@
-import React from 'react'
-import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Grid from '@material-ui/core/Grid'
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import pypiImg from '../../images/pypi.png';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import mavenImg from '../../images/maven.png';
+import npmImg from '../../images/npm.png';
+import pypiImg from '../../images/pypi.png';
+import rpmImg from '../../images/rpm.png';
+import { setTechlonogySelection } from '../../store/actions/techlonogySelectionActions'
+import { connect } from "react-redux";
 
-const technologies = [
-    { 
-      name: 'pypi',
-      image: pypiImg
-    },
-    { 
-      name: 'maven',
-      image: mavenImg
-    },
-]
+const images = [
+  {
+    source: pypiImg,
+    title: 'pypi',
+  },
+  {
+    source: mavenImg,
+    title: 'maven',
+  },
+  {
+    source: rpmImg,
+    title: 'rpm',
+  },
+  {
+    source: npmImg,
+    title: 'npm',
+  }
+];
+
 const useStyles = makeStyles((theme) => ({
-    Card: {
-        
-      },
-      Media: {
-        width: '30',  /*width of parent container*/
-        height: '70px',/*height of parent container*/
-        objectFit: 'contain',
-        position: 'relative',
 
-  top: '50%',
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  selectedOption: {
+    backgroundColor: "#4287f5"
+  },
+  image: {
+    position: 'relative',
+    height: 60,
+    width: 60,
+    '&:hover, &$focusVisible': {
+      zIndex: 1,
+      '& $imageBackdrop': {
+        opacity: 0.15,
       },
-      paper: {
-        height: 140,
-        width: 100,
+      '& $imageMarked': {
+        opacity: 0,
       },
+    },
+  },
 }));
-const TechnologiesSelection = (props) => {    
 
-    const classes = useStyles();  
+const TechnologiesSelection = (props) => {
+  const classes = useStyles();
 
-    return (
-        <div>
-        <Grid container spacing={2}>
-            <Grid item xs={1}>
-            <Grid container justify="center" spacing={2}>
-
-            <Paper className={classes.paper}>
-                {technologies.map((tech) => (
-                        <Paper variant={"imagesPath"}>      
-                            {tech.name}                  
-                            <img src={tech.image} />
-                            
-                        </Paper>
-                ))} 
-            </Paper>     
-            </Grid>
-            </Grid>
-
-         </Grid>
-        </div>
-        
-        
-    )
+  const updateStore = (techlonogy) => {
+    props.setTechlonogySelection(techlonogy)
+  }
+  return (
+    <div className={classes.root}>
+        {images.map((image) => (
+            <Button variant="contained" color={props.technologySelected == image.title ? "primary" : ""} onClick={ () => updateStore(image.title)}>
+                <img src={image.source} key={image.title} className={classes.image}/>
+            </Button>
+        ))}
+    </div>
+  );
 }
 
-export default TechnologiesSelection
+const mapStateToProps = (state) => {
+  return {
+    technologySelected: state.technologySelected
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {        
+    setTechlonogySelection: (techlonogy) => dispatch(setTechlonogySelection(techlonogy)),
+
+  };
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (TechnologiesSelection)
