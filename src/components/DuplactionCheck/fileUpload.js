@@ -1,12 +1,13 @@
-import React from 'react'
+import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import {DropzoneArea} from 'material-ui-dropzone'
-import {DropzoneDialog} from 'material-ui-dropzone'
 import CryptoJS from 'crypto-js';
-import Button from '@material-ui/core/Button'
-import {setHashedPackages} from '../../store/actions/hashedPackagesActions'
-import {fetchDuplicationCheck} from '../../store/actions/servicesFetchingActions'
+import { DropzoneArea } from 'material-ui-dropzone';
+import React from 'react';
 import { connect } from "react-redux";
+import { setHashedPackages } from '../../store/actions/hashedPackagesActions';
+import { fetchDependencyCheck, fetchDuplicationCheck, fetchUploadToStorage } from '../../store/actions/servicesFetchingActions';
+import { setUploadedPackages } from '../../store/actions/uploadedPackagesAction';
+
 
 const useStyles = makeStyles(theme => createStyles({
   previewChip: {
@@ -17,24 +18,30 @@ const useStyles = makeStyles(theme => createStyles({
 
 const FileUpload = (props) => {
   //  const [files, setFiles] = React.useState([])
-   const classes = useStyles();
+  const classes = useStyles();
 
-   const [open, setOpen] = React.useState(false);
-   const [files, setFiles] = React.useState([])
-   const [proccessedPackages, setProccessedPackages] = React.useState([])
+  const [open, setOpen] = React.useState(false);
+  const [files, setFiles] = React.useState([])
+  const [proccessedPackages, setProccessedPackages] = React.useState([])
 
-   const handleOpen = () => {
-     setOpen(open => true)
-     
-   };
- 
-   const handleClose = () => {
+  const handleOpen = () => {
+    setOpen(open => true)
+  };
+
+  const handleClose = () => {
     setOpen(open => false)
-   };
-   let packages = []
+  };
 
-    const  handleSave = (files, event) => {  
-      files.forEach(function (item) {
+  let packages = []
+
+  const  handleSave = (files, event) => {  
+   
+    props.fetchDuplicationCheck(props.hashedPackages)
+  };  
+
+
+  const handleDrop = (files, event) => {  
+    files.forEach(function (item) {
       var reader = new FileReader();
       reader.onload = e =>  {
         var file_result = e.result; // this == reader, get the loaded file "result"
@@ -42,36 +49,34 @@ const FileUpload = (props) => {
         var sha1_hash = CryptoJS.SHA1(file_wordArr); //calculate SHA1 hash
         var finalSha = sha1_hash.toString()
         var newPackagesArr = proccessedPackages
-        let newPackage = {packageName: item.name, sha1: finalSha}
-        newPackagesArr.push({packageName: item.name, sha1: finalSha})
+        let newPackage = {"packageName": item.name, "sha1": finalSha}
+        newPackagesArr.push({"packageName": item.name, "sha1": finalSha})
         setProccessedPackages(newPackagesArr)
-        setHashedPackages(newPackage, props.hashedPackages)
+        props.setHashedPackages(newPackage, props.hashedPackages)
         setOpen(open => false)
       };
       reader.readAsArrayBuffer(item);
+      props.setUploadedPackages(item, props.uploadedPackages)
     })
+
+  }
+
+  const testApi = () => {
+    var date = new Date()
+    var sid = date.getMilliseconds().toString()
+    sid.concat(date.getMilliseconds().toString())
+    props.fetchDuplicationCheck(props.hashedPackages, sid)   
+    props.fetchUploadToStorage(props.uploadedPackages[0], sid)
+    props.fetchDependencyCheck(sid)
     
-	
-   };
-   
-
-
-   React.useEffect(() => {
-    if (proccessedPackages.length == files.length && proccessedPackages.length > 0) {
-        alert("zulbaaa")
-    }   
-  }, [props.hashedPackages]);
-   React.useEffect(() => {
-    props.fetchDuplicationCheck(props.hashedPackages)
-  }, [props.hashedPackages.length]);
-
-   
-   return (
+  }
+  return (
     <div>
-      
+      <Button onClick={testApi}>check</Button>
+
       <DropzoneArea
         open={open}
-        onSave={handleSave}
+        onDrop={handleDrop}
         showPreviews={false}
         maxFileSize={5000000}
         onClose={handleClose}
@@ -83,24 +88,27 @@ const FileUpload = (props) => {
       />      
 
     </div>
-   )
+  )
     
 }
 
 const mapStateToProps = (state) => {
   return {
       hashedPackages: state.hashedPackages,      
+      uploadedPackages: state.uploadedPackages,
+      
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setUploadedPackages: (newPackage, packagesArray) => dispatch(setUploadedPackages(newPackage, packagesArray)),
     setHashedPackages: (newPackage, packagesArray) => dispatch(setHashedPackages(newPackage, packagesArray)),
-
-    fetchDuplicationCheck: (uploadedPackages) => dispatch(fetchDuplicationCheck(uploadedPackages)),
-
-     
+    fetchDuplicationCheck: (uploadedPackages, sid) => dispatch(fetchDuplicationCheck(uploadedPackages, sid)),
+    fetchDependencyCheck: (sid) => dispatch(fetchDependencyCheck(sid)),
+    fetchUploadToStorage: (uploadedPackages, sid) => dispatch(fetchUploadToStorage(uploadedPackages, sid)),    
   };
+  
 };
 
 export default connect(mapStateToProps, mapDispatchToProps) (FileUpload)
