@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { HashRouter, Route, Switch, Router  } from 'react-router';
 import 'react-fontawesome'
 import { createBrowserHistory } from "history";
+import './App.css'
+import pumbaloading from './images/pumba-loading.gif'
 
 // import '@fortawesome/fontawesome-free/css/all.min.css'
 
@@ -11,8 +13,8 @@ const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const history = createBrowserHistory({ basename: baseUrl });
 const TheLayout = React.lazy(() => import('./containers/Layout/Layout'));
 const loading = (
-  <div >
-    <div >blaaa</div>
+  <div className="Loading">
+    <img src={pumbaloading} />
   </div>
 )
 const App = (props) => {
