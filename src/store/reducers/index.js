@@ -5,6 +5,7 @@ import { repositorySelected } from './repositorySelectionReducer';
 import { dependencyCheck, duplicationCheck, processResults, repositoryUpload, uploadToStorageManager } from './servicesFetchingReducers';
 import { technologySelected } from "./technologySelectedReducer";
 import { uploadedPackages } from "./uploadedPackagesReducer";
+import { sessionId } from "./sessionIdReducer";
 
 export default combineReducers({
     hashedPackages: hashedPackages,
@@ -16,5 +17,6 @@ export default combineReducers({
     repositoryUpload: repositoryUpload,
     technologySelected: technologySelected,
     repositorySelected: repositorySelected,
-    processResults: processResults
+    processResults: processResults,
+    sessionId: sessionId
 });
