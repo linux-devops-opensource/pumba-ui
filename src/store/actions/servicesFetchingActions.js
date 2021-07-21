@@ -35,12 +35,12 @@ export function setErrorResults(service, results) {
 }
 
 // the uploading process has finished
-export function setSuccessResults() {
+export function setSuccessResults(items) {
   return {
     type: 'SET_PROCESS_RESULTS',
-    items: {
+    items: Object.assign(items, {
       finished: true,      
-    }
+    })
   };
 }
  
@@ -141,8 +141,9 @@ function fetchDataPost(serviceName, url, requestOption, payload, contentType) {
               dispatch(decreaseItemsThatLoading());
               return response;
           })         
-          .then((items) => {            
+          .then((items) => {      
             dispatch(itemsFetchDataSuccess(requestOption))
+            if(serviceName == "repository upload") {dispatch(setSuccessResults(items))}; 
           })
           .catch((err) => {
             dispatch(itemsHasErrored(true))
