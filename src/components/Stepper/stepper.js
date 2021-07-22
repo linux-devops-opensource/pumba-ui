@@ -19,8 +19,8 @@ const Stepper = (props) => {
     React.useEffect(() => {
         if (props.duplicationCheck['finished'] == true) {
             // props.fetchUploadToStorage(props.uploadedPackages[0], sid)
-            props.uploadedPackages.forEach(package => {
-                props.fetchUploadToStorage(package, sid)
+            props.uploadedPackages.forEach(singlePackage => {
+                props.fetchUploadToStorage(singlePackage, sid)
             })
         }
     }, [props.duplicationCheck]);
