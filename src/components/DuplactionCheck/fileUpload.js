@@ -44,10 +44,12 @@ const FileUpload = (props) => {
     files.forEach(function (item) {
       var reader = new FileReader();
       reader.onload = e =>  {
-        var file_result = e.result; // this == reader, get the loaded file "result"
+        console.log(e.target.result)
+        var file_result = e.target.result; // this == reader, get the loaded file "result"
         var file_wordArr = CryptoJS.lib.WordArray.create(file_result); //convert blob to WordArray , see https://code.google.com/p/crypto-js/issues/detail?id=67
         var sha1_hash = CryptoJS.SHA1(file_wordArr); //calculate SHA1 hash
         var finalSha = sha1_hash.toString()
+        console.log("Hi there adi!", finalSha)
         var newPackagesArr = proccessedPackages
         let newPackage = {"packageName": item.name, "sha1": finalSha}
         newPackagesArr.push({"packageName": item.name, "sha1": finalSha})

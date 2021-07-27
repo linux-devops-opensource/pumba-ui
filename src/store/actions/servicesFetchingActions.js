@@ -68,6 +68,7 @@ export function fetchRepositoryUpload(packagesArray, sid) {
   }
 }
 
+// validator 
 export function fetchDependencyCheck(sessionId) {
   let serviceName = "dependency check"
   let url = 'http://20.76.10.244:3000/session'
@@ -98,6 +99,7 @@ export function fetchUploadToStorage(packageToUpload, sid) {
   }
 }
 
+// checker
 export function fetchDuplicationCheck(hashedPackages, sid) {
   let serviceName = "duplication check"
   let url = 'http://51.124.62.119:3000/api/checkpackages'
@@ -139,14 +141,18 @@ function fetchDataPost(serviceName, url, requestOption, payload, contentType) {
                   throw response
               }              
               dispatch(decreaseItemsThatLoading());
+              console.log(serviceName, response)
               return response;
           })         
           .then((items) => {      
+            console.log(serviceName, items)
             dispatch(itemsFetchDataSuccess(requestOption))
             if(serviceName == "repository upload") {dispatch(setSuccessResults(items))}; 
           })
           .catch((err) => {
             dispatch(itemsHasErrored(true))
+            console.log(serviceName, "ERROR!!!!!!!!!!!!!!!!!!!!" ,err)
+
             err.json().then((erroeMsg) => {
               dispatch(setErrorResults(serviceName, erroeMsg))
             }) 

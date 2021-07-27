@@ -6,8 +6,7 @@ export function set(hashedPackages) {
         
 }
 
-export function setHashedPackages(newPackageArray, oldPackageArray) {
-    let hashedPackages = oldPackageArray
+export function setHashedPackages(newPackageArray, hashedPackages) {
     hashedPackages.push(newPackageArray)
     return (dispatch) => {
         dispatch(set(hashedPackages));        
