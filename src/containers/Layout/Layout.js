@@ -1,24 +1,15 @@
-import React from 'react'
-import Grid from '@material-ui/core/Grid';
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { TheContent } from '../index'
+import React from 'react';
+// ADI_CHANGED_TAG
+import { TheContent } from '../index';
 
-  const drawerWidth = 240;
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: "flex"
-    },   
-  }));
-   
+const drawerWidth = 240;
 
-const TheLayout = () => {  
-  const classes = useStyles();  
-  
-  return (    
-      <div className="c-wrapper">
-        <TheContent/> 
-      </div>
-  )
-}
+const TheLayout = () => {
+	return (
+		<div className="c-wrapper">
+			<TheContent />
+		</div>
+	);
+};
 
-export default TheLayout
+export default TheLayout;
