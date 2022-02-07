@@ -1,4 +1,4 @@
-// import { DropzoneArea } from 'material-ui-dropzone';
+import { DropzoneArea } from 'material-ui-dropzone';
 // ADI_TO_CHANGE_TAG
 import { Button } from '@chakra-ui/react';
 
@@ -44,6 +44,7 @@ const FileUpload = (props) => {
 				var file_wordArr = CryptoJS.lib.WordArray.create(file_result); //convert blob to WordArray , see https://code.google.com/p/crypto-js/issues/detail?id=67
 				var sha1_hash = CryptoJS.SHA1(file_wordArr); //calculate SHA1 hash
 				var finalSha = sha1_hash.toString();
+				// lmao hi aron 😭😭😭
 				console.log('Hi there adi!', finalSha);
 				var newPackagesArr = proccessedPackages;
 				let newPackage = { packageName: item.name, sha1: finalSha };
@@ -57,19 +58,19 @@ const FileUpload = (props) => {
 		});
 	};
 
-	const testApi = () => {
-		var date = new Date();
-		var sid = date.getMilliseconds().toString();
-		sid.concat(date.getMilliseconds().toString());
-		props.fetchDuplicationCheck(props.hashedPackages, sid);
-		props.fetchUploadToStorage(props.uploadedPackages[0], sid);
-		props.fetchDependencyCheck(sid);
-	};
+	// const testApi = () => {
+	// 	var date = new Date();
+	// 	var sid = date.getMilliseconds().toString();
+	// 	sid.concat(date.getMilliseconds().toString());
+	// 	props.fetchDuplicationCheck(props.hashedPackages, sid);
+	// 	props.fetchUploadToStorage(props.uploadedPackages[0], sid);
+	// 	props.fetchDependencyCheck(sid);
+	// };
 	return (
 		<div>
-			<Button onClick={testApi}>check</Button>
+			{/* <Button onClick={testApi}>check</Button> */}
 
-			{/* <DropzoneArea
+			<DropzoneArea
 				open={open}
 				onDrop={handleDrop}
 				showPreviews={false}
@@ -80,7 +81,7 @@ const FileUpload = (props) => {
 				showFileNamesInPreview={true}
 				dialogTitle={'Duplicate checker'}
 				dropzoneText={'Upload your packages'}
-			/> */}
+			/>
 		</div>
 	);
 };
