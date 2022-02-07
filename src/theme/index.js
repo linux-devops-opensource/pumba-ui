@@ -4,6 +4,10 @@ import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
 export const theme = extendTheme({
 	components: {
 		Steps
+	},
+	config: {
+		initialColorMode: 'light',
+		useSystemColorMode: false
 	}
 });
 

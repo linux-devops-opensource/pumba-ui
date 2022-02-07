@@ -7,29 +7,27 @@ import { Grid } from '@chakra-ui/react';
 
 const TheContent = () => {
 	return (
-		<main className="c-main">
-			<Grid height="100%" width="100%">
-				<Grid>
-					<Suspense>
-						<Switch>
-							{routes.map((route, idx) => {
-								return (
-									route.component && (
-										<Route
-											key={idx}
-											path={route.path}
-											exact={route.exact}
-											name={route.name}
-											render={(props) => <route.component {...props} />}
-										/>
-									)
-								);
-							})}
-						</Switch>
-					</Suspense>
-				</Grid>
+		<Grid className="c-main" as="main" width="100%" position="relative">
+			<Grid>
+				<Suspense>
+					<Switch>
+						{routes.map((route, idx) => {
+							return (
+								route.component && (
+									<Route
+										key={idx}
+										path={route.path}
+										exact={route.exact}
+										name={route.name}
+										render={(props) => <route.component {...props} />}
+									/>
+								)
+							);
+						})}
+					</Switch>
+				</Suspense>
 			</Grid>
-		</main>
+		</Grid>
 	);
 };
 
