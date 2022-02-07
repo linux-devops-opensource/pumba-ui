@@ -65,10 +65,16 @@ const FileUpload = (props) => {
 	// 	props.fetchUploadToStorage(props.uploadedPackages[0], sid);
 	// 	props.fetchDependencyCheck(sid);
 	// };
+
 	return (
 		<div>
 			{/* <Button onClick={testApi}>check</Button> */}
 
+			{/* TODO in the future
+			make this dark mode too 
+			its by mui themes and i kinda dont wanna study those rn lmao
+			https://yuvaleros.github.io/material-ui-dropzone/#section-theme 
+			*/}
 			<DropzoneArea
 				open={open}
 				onDrop={handleDrop}
