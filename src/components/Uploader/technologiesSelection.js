@@ -65,15 +65,12 @@ const TechnologiesSelection = (props) => {
 			{images.map((image) => (
 				<Button
 					key={image.title}
-					// colorScheme=''
 					variant="solid"
 					colorScheme={props.technologySelected == image.title ? 'green' : 'gray'}
 					onClick={() => updateStore(image.title)}
 					p="4"
 					m="4"
 					height="80px"
-					border="2px"
-					borderColor={props.technologySelected == image.title ? 'green' : 'gray'}
 				>
 					<Box>
 						<Image
