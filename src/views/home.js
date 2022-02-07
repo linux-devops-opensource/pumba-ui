@@ -1,36 +1,38 @@
-import { Text, Button, Flex, Box, Spacer, Center, Grid } from '@chakra-ui/react';
+import { Text, Button, Flex, Box, Grid } from '@chakra-ui/react';
 import { Step, Steps, useSteps } from 'chakra-ui-steps';
+// DOCUMENTATION -- THANK GOD FOR THAT GUY https://jeanverster.github.io/chakra-ui-steps-site/
 
 import React from 'react';
-import FileUpload from '../components/DuplactionCheck/fileUpload';
+import FileUpload from '../components/DuplictionCheck/fileUpload';
 import Results from '../components/Results/results';
 import TechnologiesSelection from '../components/Uploader/technologiesSelection';
 
 let stepsw = [
 	{
 		Name: 'Select Technology',
+		description: 'pick the type of package',
 		After_Display: '',
-		// Display: <Text>tech </Text>,
 		Display: <TechnologiesSelection />,
 		Verifier: verify1
 	},
 	// {
 	//     Name: 'Select Repository Manager',
 	//     After_Display: '',
+	//     description: '',
 	//     Display: <RepositorySelection/>,
 	//     Verifier: verify1
 	// },
 	{
 		Name: 'Upload packages',
+		description: 'upload the files u want',
 		After_Display: '',
-		// Display: <Text>upload </Text>,
 		Display: <FileUpload />,
 		Verifier: verify1
 	},
 	{
 		Name: 'Results',
+		description: 'try to upload and pray!',
 		After_Display: '',
-		// Display: <Text>results </Text>,
 		Display: <Results />,
 		Verifier: verify1
 	}
@@ -48,35 +50,14 @@ const Home = (props) => {
 	const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
 		initialStep: 0
 	});
-	// const [ activeStep, setActiveStep ] = React.useState(0);
 	stepsw = getSteps();
-
-	// const handleNext = () => {
-	// 	if (stepsw[activeStep].Verifier()) {
-	// 		// setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	// 		setStep((prevActiveStep) => prevActiveStep + 1);
-	// 	}
-	// };
-
-	// const handleBack = () => {
-	// 	setStep((prevActiveStep) => prevActiveStep - 1);
-	// 	// setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	// };
-
-	// const handleReset = () => {
-	// 	setActiveStep(0);
-	// };
-
-	// const handleFinish = () => {
-	// 	window.location.reload();
-	// };
 
 	return (
 		<Grid column className="home-component" width="100%" height="100%">
 			<Box p="7">
 				<Steps activeStep={activeStep} orientation="horizontal">
 					{stepsw.map((s, index) => (
-						<Step key={index} label={s.Name} p="5" justifyContent="center">
+						<Step key={index} label={s.Name} p="5" justifyContent="center" description={s.description}>
 							{s.Display}
 						</Step>
 					))}

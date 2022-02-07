@@ -1,5 +1,4 @@
 import { DropzoneArea } from 'material-ui-dropzone';
-// ADI_TO_CHANGE_TAG
 import { Button } from '@chakra-ui/react';
 
 import CryptoJS from 'crypto-js';
