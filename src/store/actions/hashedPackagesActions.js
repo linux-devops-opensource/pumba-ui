@@ -1,15 +1,11 @@
-export function set(hashedPackages) {
-    return {
-        type: 'SET_HASHED_PACKAGES',
-        hashedPackages
-    }
-        
-}
+import { SET_HASHED_PACKAGES_TYPE } from '../types';
 
 export function setHashedPackages(newPackageArray, hashedPackages) {
-    hashedPackages.push(newPackageArray)
-    return (dispatch) => {
-        dispatch(set(hashedPackages));        
-    };
-
+	hashedPackages.push(newPackageArray);
+	return (dispatch) => {
+		dispatch({
+			type: SET_HASHED_PACKAGES_TYPE,
+			hashedPackages
+		});
+	};
 }

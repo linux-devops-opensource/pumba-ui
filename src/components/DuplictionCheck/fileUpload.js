@@ -1,5 +1,5 @@
 import { DropzoneArea } from 'material-ui-dropzone';
-import { Button } from '@chakra-ui/react';
+import { Button, Box, Center, Container } from '@chakra-ui/react';
 
 import CryptoJS from 'crypto-js';
 import React from 'react';
@@ -67,7 +67,7 @@ const FileUpload = (props) => {
 	// };
 
 	return (
-		<div>
+		<Box>
 			{/* <Button onClick={testApi}>check</Button> */}
 
 			{/* TODO in the future
@@ -75,19 +75,23 @@ const FileUpload = (props) => {
 			its by mui themes and i kinda dont wanna study those rn lmao
 			https://yuvaleros.github.io/material-ui-dropzone/#section-theme 
 			*/}
-			<DropzoneArea
-				open={open}
-				onDrop={handleDrop}
-				showPreviews={false}
-				maxFileSize={5000000}
-				onClose={handleClose}
-				cancelButtonText={'Cancel'}
-				submitButtonText={'Submit'}
-				showFileNamesInPreview={true}
-				dialogTitle={'Duplicate checker'}
-				dropzoneText={'Upload your packages'}
-			/>
-		</div>
+			<Center>
+				<Container>
+					<DropzoneArea
+						open={open}
+						onDrop={handleDrop}
+						showPreviews={false}
+						maxFileSize={5000000}
+						onClose={handleClose}
+						cancelButtonText={'Cancel'}
+						submitButtonText={'Submit'}
+						showFileNamesInPreview={true}
+						dialogTitle={'Duplicate checker'}
+						dropzoneText={'Upload your packages'}
+					/>
+				</Container>
+			</Center>
+		</Box>
 	);
 };
 

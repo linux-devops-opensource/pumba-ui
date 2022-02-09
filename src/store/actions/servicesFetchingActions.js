@@ -1,7 +1,18 @@
+import {
+	DEPENDENCY_FETCH_TYPE,
+	DUPLICATION_FETCH_TYPE,
+	ITEMS_HAS_ERRORED_TYPE,
+	ITEM_LOADING_TYPE,
+	ITEM_STOPPED_LOADING_TYPE,
+	REPOSITORY_UPLOAD_FETCH_TYPE,
+	SET_PROCESS_RESULTS_TYPE,
+	UPLOAD_TO_STORAGE_FETCH_TYPE
+} from '../types';
+
 // some api call has failed, not only services
 export function itemsHasErrored(bool) {
 	return {
-		type: 'ITEMS_HAS_ERRORED',
+		type: ITEMS_HAS_ERRORED_TYPE,
 		hasErrored: bool
 	};
 }
@@ -9,21 +20,21 @@ export function itemsHasErrored(bool) {
 // some api call is loading
 export function increaseItemsThatLoading() {
 	return {
-		type: 'ITEM_LOADING'
+		type: ITEM_LOADING_TYPE
 	};
 }
 
 // decrease the amount of api calles than running
 export function decreaseItemsThatLoading() {
 	return {
-		type: 'ITEM_STOPPED_LOADING'
+		type: ITEM_STOPPED_LOADING_TYPE
 	};
 }
 
 // the uploading process has failed
 export function setErrorResults(service, results) {
 	return {
-		type: 'SET_PROCESS_RESULTS',
+		type: SET_PROCESS_RESULTS_TYPE,
 		items: {
 			finished: false,
 			failed: {
@@ -37,7 +48,7 @@ export function setErrorResults(service, results) {
 // the uploading process has finished
 export function setSuccessResults(items) {
 	return {
-		type: 'SET_PROCESS_RESULTS',
+		type: SET_PROCESS_RESULTS_TYPE,
 		items: Object.assign(items, {
 			finished: true
 		})
@@ -61,7 +72,7 @@ export function fetchRepositoryUpload(packagesArray, sid) {
 		packages: packagesArray
 	};
 	let payload = JSON.stringify(body);
-	let requestOption = 'REPOSITORY_UPLOAD_FETCH';
+	let requestOption = REPOSITORY_UPLOAD_FETCH_TYPE;
 	let contentType = 'application/json';
 	return (dispatch) => {
 		dispatch(fetchDataPost(serviceName, url, requestOption, payload, contentType));
@@ -79,7 +90,7 @@ export function fetchDependencyCheck(sessionId) {
 		pkgs: [ {} ]
 	};
 	let payload = JSON.stringify(body);
-	let requestOption = 'DEPENDENCY_FETCH';
+	let requestOption = DEPENDENCY_FETCH_TYPE;
 	let contentType = 'application/json';
 	return (dispatch) => {
 		dispatch(fetchDataPost(serviceName, url, requestOption, payload, contentType));
@@ -92,7 +103,7 @@ export function fetchUploadToStorage(packageToUpload, sid) {
 	payload.append('file', packageToUpload);
 
 	let url = 'http://20.73.218.20:3000/packages/'.concat(sid);
-	let requestOption = 'UPLOAD_TO_STORAGE_FETCH';
+	let requestOption = UPLOAD_TO_STORAGE_FETCH_TYPE;
 	let contentType = undefined;
 	return (dispatch) => {
 		dispatch(fetchDataPost(serviceName, url, requestOption, payload, contentType));
@@ -108,7 +119,7 @@ export function fetchDuplicationCheck(hashedPackages, sid) {
 		packages: hashedPackages
 	};
 	let payload = JSON.stringify(body);
-	let requestOption = 'DUPLICATION_FETCH';
+	let requestOption = DUPLICATION_FETCH_TYPE;
 	let contentType = 'application/json';
 	return (dispatch) => {
 		dispatch(fetchDataPost(serviceName, url, requestOption, payload, contentType));

@@ -1,10 +1,10 @@
+import { SET_TECHNOLOGY_SELECTION_TYPE } from '../types';
+export function technologySelected(state = '', action) {
+	switch (action.type) {
+		case SET_TECHNOLOGY_SELECTION_TYPE:
+			return action.techlonogy;
 
-  export function technologySelected(state = '', action) {
-    switch (action.type) {
-        case 'SET_TECHNOLOGY_SELECTION':
-            return action.techlonogy;
-  
-        default:
-            return state;
-    }
-  }
+		default:
+			return state;
+	}
+}
