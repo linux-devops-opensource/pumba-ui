@@ -5,11 +5,11 @@ import CryptoJS from 'crypto-js';
 import React from 'react';
 import { connect } from 'react-redux';
 import { setHashedPackages } from '../../store/actions/hashedPackagesActions';
-import {
-	fetchDependencyCheck,
-	fetchDuplicationCheck,
-	fetchUploadToStorage
-} from '../../store/actions/servicesFetchingActions';
+
+import { fetchDependencyCheck } from '../../services/fetch-dependency-check';
+import { fetchUploadToStorage } from '../../services/upload-pkgs-to-storage';
+import { fetchDuplicationCheck } from '../../services/fetch-duplication-check';
+
 import { setUploadedPackages } from '../../store/actions/uploadedPackagesAction';
 
 const FileUpload = (props) => {

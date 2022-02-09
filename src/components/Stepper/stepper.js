@@ -1,15 +1,10 @@
-// import CircularProgress from '@material-ui/core/CircularProgress';
-// import Fade from '@material-ui/core/Fade';
 import { Fade, CircularProgress } from '@chakra-ui/react';
-// ADI_CHANGED_TAG
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-	fetchDependencyCheck,
-	fetchDuplicationCheck,
-	fetchRepositoryUpload,
-	fetchUploadToStorage
-} from '../../store/actions/servicesFetchingActions';
+import { fetchRepositoryUpload } from '../../services/fetch-repository-upload';
+import { fetchDependencyCheck } from '../../services/fetch-dependency-check';
+import { fetchUploadToStorage } from '../../services/upload-pkgs-to-storage';
+import { fetchDuplicationCheck } from '../../services/fetch-duplication-check';
 import { setSessionId } from '../../store/actions/sessionIdAction';
 
 const Stepper = (props) => {
