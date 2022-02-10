@@ -31,7 +31,7 @@ const FileUpload = (props) => {
 	let packages = [];
 
 	const handleSave = (files, event) => {
-		props.fetchDuplicationCheck(props.hashedPackages);
+		// props.fetchDuplicationCheck(props.hashedPackages);
 	};
 
 	const handleDrop = (files, event) => {

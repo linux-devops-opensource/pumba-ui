@@ -10,18 +10,29 @@ import { setSessionId } from '../../store/actions/sessionIdAction';
 const Stepper = (props) => {
 	const [ loading, setLoading ] = React.useState(false);
 
-	var sid = props.sid;
-	// step 1
+	let sid = props.sessionId;
+	let tech = props.technologySelected;
+
+	// step 0 -- trigger session id created
 	React.useEffect(() => {
 		setLoading(true);
 		props.setSessionId();
-		props.fetchDuplicationCheck(props.hashedPackages, sid);
 	}, []);
-	// step 2
+
+	// step 1 -- trigger the checker
+	React.useEffect(
+		() => {
+			if (sid !== '') {
+				props.fetchDuplicationCheck(props.hashedPackages, tech, sid);
+			}
+		},
+		[ props.sessionId ]
+	);
+
+	// step 2 -- upload each of the packages to the storage manager
 	React.useEffect(
 		() => {
 			if (props.duplicationCheck['finished'] == true) {
-				// props.fetchUploadToStorage(props.uploadedPackages[0], sid)
 				props.uploadedPackages.forEach((singlePackage) => {
 					props.fetchUploadToStorage(singlePackage, sid);
 				});
@@ -29,29 +40,31 @@ const Stepper = (props) => {
 		},
 		[ props.duplicationCheck ]
 	);
-	// step 3
+
+	// step 3 -- fetch the validator
 	React.useEffect(
 		() => {
-			if (props.uploadToStorageManager['finished']) {
-				props.fetchDependencyCheck(sid);
+			if (props.uploadToStorageManager['finished'] == true) {
+				props.fetchDependencyCheck(props.hashedPackages, tech, sid);
 			}
 		},
 		[ props.uploadToStorageManager ]
 	);
-	// step 4
+
+	// step 4 -- fetch the repository upload
 	React.useEffect(
 		() => {
-			if (props.dependencyCheck['finished']) {
+			if (props.dependencyCheck['finished'] == true) {
 				props.fetchRepositoryUpload(props.uploadedPackages.map((a) => a.name), sid);
 			}
 		},
 		[ props.dependencyCheck ]
 	);
 
-	// step 5
+	// step 5 -- finish loading and show results
 	React.useEffect(
 		() => {
-			if (props.repositoryUpload['finished']) {
+			if (props.repositoryUpload['finished'] == true) {
 				setLoading(false);
 			}
 		},
@@ -77,20 +90,22 @@ const Stepper = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
+		technologySelected: state.technologySelected,
 		hashedPackages: state.hashedPackages,
 		uploadedPackages: state.uploadedPackages,
 		dependencyCheck: state.dependencyCheck,
 		duplicationCheck: state.duplicationCheck,
 		uploadToStorageManager: state.uploadToStorageManager,
 		repositoryUpload: state.repositoryUpload,
-		sid: state.sessionId
+		sessionId: state.sessionId
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		fetchDuplicationCheck: (uploadedPackages, sid) => dispatch(fetchDuplicationCheck(uploadedPackages, sid)),
-		fetchDependencyCheck: (sid) => dispatch(fetchDependencyCheck(sid)),
+		fetchDuplicationCheck: (hashedPackages, tech, sid) =>
+			dispatch(fetchDuplicationCheck(hashedPackages, tech, sid)),
+		fetchDependencyCheck: (packages, tech, sessionId) => dispatch(fetchDependencyCheck(packages, tech, sessionId)),
 		fetchRepositoryUpload: (uploadedPackages, sid) => dispatch(fetchRepositoryUpload(uploadedPackages, sid)),
 		fetchUploadToStorage: (uploadedPackages, sid) => dispatch(fetchUploadToStorage(uploadedPackages, sid)),
 		setSessionId: () => dispatch(setSessionId())

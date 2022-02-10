@@ -26,6 +26,7 @@ const store = configureStore(history, initialState);
 ReactDOM.render(
 	<React.StrictMode>
 		{/* <MuiThemeProvider theme={MuiTheme}> */}
+		{/* // <div> */}
 		<ChakraProvider theme={theme}>
 			<Provider store={store}>
 				<App />
@@ -33,6 +34,7 @@ ReactDOM.render(
 			{/* <CssBaseline />
       </MuiThemeProvider> */}
 		</ChakraProvider>
+		{/* </div>, */}
 	</React.StrictMode>,
 	document.getElementById('root')
 );

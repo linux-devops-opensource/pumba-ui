@@ -10,6 +10,7 @@ import {
 export function fetchDataPost(serviceName, url, requestOption, payload, contentType) {
 	return (dispatch) => {
 		dispatch(increaseItemsThatLoading());
+		console.log('~~~~~~~');
 		console.info(payload);
 		const headers = {
 			Accept: 'application/json, text/plain, */*',
@@ -39,6 +40,7 @@ export function fetchDataPost(serviceName, url, requestOption, payload, contentT
 			.then((items) => {
 				console.log(serviceName, items);
 				dispatch(itemsFetchDataSuccess(requestOption));
+				// TODO find a way to make this better and less specific
 				if (serviceName === 'repository upload') {
 					dispatch(setSuccessResults(items));
 				}

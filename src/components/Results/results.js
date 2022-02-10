@@ -8,7 +8,11 @@ const Results = (props) => {
 	if (props.processResults['finished']) {
 		return 'finished';
 	} else if (Object.keys(props.processResults['failed']).length != 0) {
-		return <ResultsError />;
+		return (
+			<Center>
+				<ResultsError />
+			</Center>
+		);
 	} else {
 		return (
 			<Center>
