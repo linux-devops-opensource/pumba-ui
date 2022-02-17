@@ -11,6 +11,7 @@ const checkerUrl = CHECKER_URL;
 
 // TODO change this api
 export function fetchDuplicationCheck(hashedPackages, tech, sid) {
+	console.log(checkerUrl);
 	let url = `${checkerUrl}/session`;
 	console.log('tecg', tech);
 	console.log('sid##########', sid);

@@ -6,6 +6,7 @@ import { fetchDependencyCheck } from '../../services/fetch-dependency-check';
 import { fetchUploadToStorage } from '../../services/upload-pkgs-to-storage';
 import { fetchDuplicationCheck } from '../../services/fetch-duplication-check';
 import { setSessionId } from '../../store/actions/sessionIdAction';
+import { createStorageBucket } from '../../services/create-storage-bucket';
 
 const Stepper = (props) => {
 	const [ loading, setLoading ] = React.useState(false);
@@ -19,23 +20,35 @@ const Stepper = (props) => {
 		props.setSessionId();
 	}, []);
 
-	// step 1 -- trigger the checker
+	// step 0.5 lmao -- make upload bucket
 	React.useEffect(
 		() => {
 			if (sid !== '') {
-				props.fetchDuplicationCheck(props.hashedPackages, tech, sid);
+				props.createStorageBucket(props.hashedPackages, tech, sid);
 			}
 		},
 		[ props.sessionId ]
+	);
+
+	// step 1 -- trigger the checker
+	React.useEffect(
+		() => {
+			if (props.storageBucketCreation['finished'] == true) {
+				props.fetchDuplicationCheck(props.hashedPackages, tech, sid);
+			}
+		},
+		[ props.storageBucketCreation ]
 	);
 
 	// step 2 -- upload each of the packages to the storage manager
 	React.useEffect(
 		() => {
 			if (props.duplicationCheck['finished'] == true) {
+				// props.createStorageBucket(props.hashedPackages, tech, sid).then(() => {
 				props.uploadedPackages.forEach((singlePackage) => {
 					props.fetchUploadToStorage(singlePackage, sid);
 				});
+				// });
 			}
 		},
 		[ props.duplicationCheck ]
@@ -55,7 +68,7 @@ const Stepper = (props) => {
 	React.useEffect(
 		() => {
 			if (props.dependencyCheck['finished'] == true) {
-				props.fetchRepositoryUpload(props.uploadedPackages.map((a) => a.name), sid);
+				props.fetchRepositoryUpload(props.uploadedPackages.map((a) => a.name), sid, tech);
 			}
 		},
 		[ props.dependencyCheck ]
@@ -97,7 +110,8 @@ const mapStateToProps = (state) => {
 		duplicationCheck: state.duplicationCheck,
 		uploadToStorageManager: state.uploadToStorageManager,
 		repositoryUpload: state.repositoryUpload,
-		sessionId: state.sessionId
+		sessionId: state.sessionId,
+		storageBucketCreation: state.storageBucketCreation
 	};
 };
 
@@ -107,8 +121,10 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(fetchDuplicationCheck(hashedPackages, tech, sid)),
 		fetchDependencyCheck: (packages, tech, sessionId) => dispatch(fetchDependencyCheck(packages, tech, sessionId)),
 		fetchRepositoryUpload: (uploadedPackages, sid) => dispatch(fetchRepositoryUpload(uploadedPackages, sid)),
-		fetchUploadToStorage: (uploadedPackages, sid) => dispatch(fetchUploadToStorage(uploadedPackages, sid)),
-		setSessionId: () => dispatch(setSessionId())
+		fetchUploadToStorage: (uploadedPackages, sid, tech) =>
+			dispatch(fetchUploadToStorage(uploadedPackages, sid, tech)),
+		setSessionId: () => dispatch(setSessionId()),
+		createStorageBucket: (hashedPackages, tech, sid) => dispatch(createStorageBucket(hashedPackages, tech, sid))
 	};
 };
 

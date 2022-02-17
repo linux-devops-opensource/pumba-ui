@@ -1,4 +1,5 @@
 import {
+	CREATE_STORAGE_BUCKET_FETCH_TYPE,
 	DEPENDENCY_FETCH_TYPE,
 	DUPLICATION_FETCH_TYPE,
 	ITEMS_HAS_ERRORED_TYPE,
@@ -43,6 +44,16 @@ export function processResults(state = { failed: false }, action) {
 const defaultState = {
 	finished: false
 };
+
+export function storageBucketCreation(state = defaultState, action) {
+	switch (action.type) {
+		case CREATE_STORAGE_BUCKET_FETCH_TYPE:
+			return action.items;
+
+		default:
+			return state;
+	}
+}
 
 export function duplicationCheck(state = defaultState, action) {
 	switch (action.type) {

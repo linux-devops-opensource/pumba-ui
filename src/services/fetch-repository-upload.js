@@ -5,14 +5,19 @@ import { UPLOADER_URL } from './variables';
 const serviceName = 'repository upload';
 const contentType = 'application/json';
 
-// const uploaderUrl = 'http://20.126.168.149:3000';
 const uploaderUrl = UPLOADER_URL;
 
-// TODO change this api
-export function fetchRepositoryUpload(packagesArray, sid) {
-	let url = `${uploaderUrl}/api/package/${sid}`;
+export function fetchRepositoryUpload(packagesArray, sid, tech) {
+	const pkgs = packagesArray.map((p) => {
+		return { name: p.name };
+	});
+
+	// let url = `${uploaderUrl}/api/package/${sid}`;
+	let url = `${uploaderUrl}/sessions`;
 	let body = {
-		packages: packagesArray
+		sid: sid,
+		type: tech,
+		pkgs: pkgs
 	};
 	let payload = JSON.stringify(body);
 	return (dispatch) => {

@@ -12,7 +12,7 @@ export function fetchUploadToStorage(packageToUpload, sid) {
 	const payload = new FormData();
 	payload.append('file', packageToUpload);
 
-	let url = `${storageManagerUrl}/packages/${sid}`;
+	let url = `${storageManagerUrl}/sessions/${sid}/file/${packageToUpload.path}`;
 	return (dispatch) => {
 		dispatch(fetchDataPost(serviceName, url, UPLOAD_TO_STORAGE_FETCH_TYPE, payload, contentType));
 	};
