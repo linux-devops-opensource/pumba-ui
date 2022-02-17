@@ -54,24 +54,26 @@ const Stepper = (props) => {
 		[ props.duplicationCheck ]
 	);
 
-	// step 3 -- fetch the validator
-	React.useEffect(
-		() => {
-			if (props.uploadToStorageManager['finished'] == true) {
-				props.fetchDependencyCheck(props.hashedPackages, tech, sid);
-			}
-		},
-		[ props.uploadToStorageManager ]
-	);
+	// // step 3 -- fetch the validator
+	// React.useEffect(
+	// 	() => {
+	// 		if (props.uploadToStorageManager['finished'] == true) {
+	// 			props.fetchDependencyCheck(props.hashedPackages, tech, sid);
+	// 		}
+	// 	},
+	// 	[ props.uploadToStorageManager ]
+	// );
 
 	// step 4 -- fetch the repository upload
 	React.useEffect(
 		() => {
-			if (props.dependencyCheck['finished'] == true) {
+			// if (props.dependencyCheck['finished'] == true) {
+			if (props.uploadToStorageManager['finished'] == true) {
 				props.fetchRepositoryUpload(props.uploadedPackages.map((a) => a.name), sid, tech);
 			}
 		},
-		[ props.dependencyCheck ]
+		// [ props.dependencyCheck ]
+		[ props.uploadToStorageManager ]
 	);
 
 	// step 5 -- finish loading and show results
@@ -120,7 +122,8 @@ const mapDispatchToProps = (dispatch) => {
 		fetchDuplicationCheck: (hashedPackages, tech, sid) =>
 			dispatch(fetchDuplicationCheck(hashedPackages, tech, sid)),
 		fetchDependencyCheck: (packages, tech, sessionId) => dispatch(fetchDependencyCheck(packages, tech, sessionId)),
-		fetchRepositoryUpload: (uploadedPackages, sid) => dispatch(fetchRepositoryUpload(uploadedPackages, sid)),
+		fetchRepositoryUpload: (uploadedPackages, sid, tech) =>
+			dispatch(fetchRepositoryUpload(uploadedPackages, sid, tech)),
 		fetchUploadToStorage: (uploadedPackages, sid, tech) =>
 			dispatch(fetchUploadToStorage(uploadedPackages, sid, tech)),
 		setSessionId: () => dispatch(setSessionId()),

@@ -11,20 +11,32 @@ const checkerUrl = CHECKER_URL;
 
 // TODO change this api
 export function fetchDuplicationCheck(hashedPackages, tech, sid) {
-	console.log(checkerUrl);
+	const brokeDownPkgs = [];
+	for (const p of hashedPackages) {
+		let name = p.packageName.substring(0, p.packageName.lastIndexOf('.'));
+		let lastIndexOfHyper = name.lastIndexOf('-');
+		brokeDownPkgs.push({
+			name: name.substring(0, lastIndexOfHyper),
+			version: name.substring(lastIndexOfHyper + 1),
+			sha1: p.sha1
+		});
+	}
+
 	let url = `${checkerUrl}/session`;
-	console.log('tecg', tech);
-	console.log('sid##########', sid);
 	let body = {
 		sid: sid,
 		type: tech,
 		statusCode: 200,
-		pkgs: hashedPackages
+		pkgs: brokeDownPkgs
 	};
-	console.log(body);
+
 	let payload = JSON.stringify(body);
-	// let payload = body;
+
+	const callback = (items) => {
+		console.log(items);
+	};
+
 	return (dispatch) => {
-		dispatch(fetchDataPost(serviceName, url, DUPLICATION_FETCH_TYPE, payload, contentType));
+		dispatch(fetchDataPost(serviceName, url, DUPLICATION_FETCH_TYPE, payload, contentType, callback));
 	};
 }

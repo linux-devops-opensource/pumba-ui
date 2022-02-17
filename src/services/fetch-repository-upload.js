@@ -9,7 +9,7 @@ const uploaderUrl = UPLOADER_URL;
 
 export function fetchRepositoryUpload(packagesArray, sid, tech) {
 	const pkgs = packagesArray.map((p) => {
-		return { name: p.name };
+		return { name: p };
 	});
 
 	// let url = `${uploaderUrl}/api/package/${sid}`;
@@ -19,6 +19,7 @@ export function fetchRepositoryUpload(packagesArray, sid, tech) {
 		type: tech,
 		pkgs: pkgs
 	};
+	console.log('REPO UPLOAD~~', body);
 	let payload = JSON.stringify(body);
 	return (dispatch) => {
 		dispatch(fetchDataPost(serviceName, url, REPOSITORY_UPLOAD_FETCH_TYPE, payload, contentType));
