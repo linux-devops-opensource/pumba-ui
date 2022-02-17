@@ -1,10 +1,12 @@
 import { REPOSITORY_UPLOAD_FETCH_TYPE } from '../store/types';
 import { fetchDataPost } from './generic-post-req';
+import { UPLOADER_URL } from './variables';
 
 const serviceName = 'repository upload';
 const contentType = 'application/json';
 
-const uploaderUrl = 'http://20.126.168.149:3000';
+// const uploaderUrl = 'http://20.126.168.149:3000';
+const uploaderUrl = UPLOADER_URL;
 
 // TODO change this api
 export function fetchRepositoryUpload(packagesArray, sid) {

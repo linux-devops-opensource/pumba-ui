@@ -1,11 +1,13 @@
 import { DUPLICATION_FETCH_TYPE } from '../store/types';
 import { fetchDataPost } from './generic-post-req';
+import { CHECKER_URL } from './variables';
 
 // checker
 const serviceName = 'duplication check';
 const contentType = 'application/json';
 
-const checkerUrl = 'http://20.103.101.183:3000';
+// const checkerUrl = 'http://20.103.101.183:3000';
+const checkerUrl = CHECKER_URL;
 
 // TODO change this api
 export function fetchDuplicationCheck(hashedPackages, tech, sid) {

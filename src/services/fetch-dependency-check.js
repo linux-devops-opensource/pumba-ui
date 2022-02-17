@@ -1,11 +1,13 @@
 import { DEPENDENCY_FETCH_TYPE } from '../store/types';
 import { fetchDataPost } from './generic-post-req';
+import { VALIDATOR_URL } from './variables';
 
 // validator
 const serviceName = 'dependency check';
 const contentType = 'application/json';
 
-const validatorUrl = 'http://20.103.212.101:3000';
+// const validatorUrl = 'http://20.103.212.101:3000';
+const validatorUrl = VALIDATOR_URL;
 
 // export function fetchDependencyCheck({ packages, tech, sessionId }) {
 export function fetchDependencyCheck(packages, tech, sessionId) {
