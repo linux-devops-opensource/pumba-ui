@@ -31,7 +31,7 @@ export function loadingItemsCount(state = 0, action) {
 	}
 }
 
-export function processResults(state = { failed: false }, action) {
+export function processResults(state = { finished: false, failed: false }, action) {
 	switch (action.type) {
 		case SET_PROCESS_RESULTS_TYPE:
 			return action.items;

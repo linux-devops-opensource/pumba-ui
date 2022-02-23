@@ -1,13 +1,21 @@
-import { Text, Icon } from '@chakra-ui/react';
+import { Heading, HStack, Image, Center, Box } from '@chakra-ui/react';
 import React from 'react';
 import { connect } from 'react-redux';
-import { RiEmotionSadLine } from 'react-icons/ri';
+import errorImg from '../../images/404-yetti.png';
 
 const TechUnsupportedError = (props) => {
 	return (
 		<div>
-			<Icon as={RiEmotionSadLine} />
-			<Text fontSize="lg">oh no: {props.technologySelected} is not supported yet :////</Text>
+			<HStack templateColumns="repeat(2, 1fr)">
+				<Box>
+					<Image src={errorImg} maxH={400} alt="pumba icon" p="0.5" />
+				</Box>
+				<Box>
+					<Center>
+						<Heading fontSize="xl">oh no: {props.technologySelected} is not supported yet :////</Heading>
+					</Center>
+				</Box>
+			</HStack>
 		</div>
 	);
 };

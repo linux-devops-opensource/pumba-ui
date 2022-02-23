@@ -1,4 +1,4 @@
-import FileUpload from '../components/DuplictionCheck/fileUpload';
+// import FileUpload from '../components/DuplictionCheck/fileUpload';
 import Results from '../components/Results/results';
 import TechnologiesSelection from '../components/Uploader/technologiesSelection';
 import Wrapper from '../components/DuplictionCheck/fileUploadWrapper';

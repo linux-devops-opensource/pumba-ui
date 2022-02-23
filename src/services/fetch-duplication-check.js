@@ -1,15 +1,42 @@
 import { DUPLICATION_FETCH_TYPE } from '../store/types';
 import { fetchDataPost } from './generic-post-req';
 import { CHECKER_URL } from './variables';
+import { store } from '../store';
+import { setPackageDetails } from '../store/actions/packagesDetailsActions';
+import { setErrorResults } from '../store/actions/servicesFetchingActions';
+import { itemsHasErrored } from '../store/actions/servicesFetchingActions';
 
 const serviceName = 'duplication check';
 const contentType = 'application/json';
 const checkerUrl = CHECKER_URL;
 
-const callback = (items) => {
-	console.log(items);
+const callback = (items, dispatch) => {
 	console.log('THIS IS THE CALLBACK FUNC');
-	// TODO change this so it would change the file status
+	const state = store.getState();
+
+	console.log(state.packagesInfo);
+	for (const p of items.pkgs) {
+		const info = state.packagesInfo[`${p.name}-${p.version}.tgz`];
+		if (p.existInTarget) {
+			info.existInTarget = p.existInTarget;
+			info.info = p.info;
+			info.failed = true;
+		} else {
+			info.existInTarget = false;
+		}
+		dispatch(setPackageDetails(info, state.packagesInfo));
+	}
+
+	const duplicatePkgs = Object.values(state.packagesInfo).filter((p) => {
+		console.log(p);
+		return p.existInTarget;
+	});
+	console.log('dupes ', duplicatePkgs);
+
+	if (duplicatePkgs.length === Object.values(state.packagesInfo).length) {
+		dispatch(itemsHasErrored(true));
+		dispatch(setErrorResults(serviceName, { error: { message: 'failed in dup check' } }));
+	}
 };
 
 export function fetchDuplicationCheck(hashedPackages, tech, sid) {

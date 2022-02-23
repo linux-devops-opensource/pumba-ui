@@ -13,6 +13,7 @@ import {
 import { technologySelected } from './technologySelectedReducer';
 import { uploadedPackages } from './uploadedPackagesReducer';
 import { sessionId } from './sessionIdReducer';
+import { packagesInfo } from './packagesDetailsReducer';
 
 export default combineReducers({
 	hashedPackages: hashedPackages,
@@ -26,5 +27,6 @@ export default combineReducers({
 	repositorySelected: repositorySelected,
 	processResults: processResults,
 	sessionId: sessionId,
-	storageBucketCreation: storageBucketCreation
+	storageBucketCreation: storageBucketCreation,
+	packagesInfo: packagesInfo
 });

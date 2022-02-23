@@ -44,7 +44,7 @@ const Stepper = (props) => {
 	// step 2 -- upload each of the packages to the storage manager
 	React.useEffect(
 		() => {
-			if (props.duplicationCheck['finished'] == true) {
+			if (props.duplicationCheck['finished'] == true && props.processResults['finished'] == false) {
 				// props.createStorageBucket(props.hashedPackages, tech, sid).then(() => {
 				props.uploadedPackages.forEach((singlePackage) => {
 					props.fetchUploadToStorage(singlePackage, sid);
@@ -69,7 +69,7 @@ const Stepper = (props) => {
 	React.useEffect(
 		() => {
 			// if (props.dependencyCheck['finished'] == true) {
-			if (props.uploadToStorageManager['finished'] == true) {
+			if (props.uploadToStorageManager['finished'] == true && props.processResults['finished'] == false) {
 				props.fetchRepositoryUpload(props.uploadedPackages.map((a) => a.name), sid, tech);
 			}
 		},
@@ -114,7 +114,8 @@ const mapStateToProps = (state) => {
 		uploadToStorageManager: state.uploadToStorageManager,
 		repositoryUpload: state.repositoryUpload,
 		sessionId: state.sessionId,
-		storageBucketCreation: state.storageBucketCreation
+		storageBucketCreation: state.storageBucketCreation,
+		processResults: state.processResults
 	};
 };
 

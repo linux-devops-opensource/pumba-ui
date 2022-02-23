@@ -1,7 +1,4 @@
-// import Button from '@material-ui/core/Button';
-// import { makeStyles } from '@material-ui/core/styles';
 import { Button, Image, Box, Text, Center } from '@chakra-ui/react';
-// ADI_CHANGED_TAG
 import React from 'react';
 import mavenImg from '../../images/maven.png';
 import npmImg from '../../images/npm.png';
@@ -29,37 +26,11 @@ const images = [
 	}
 ];
 
-// const useStyles = makeStyles((theme) => ({
-// 	root: {
-// 		'& > *': {
-// 			margin: theme.spacing(1)
-// 		}
-// 	},
-// 	selectedOption: {
-// 		backgroundColor: '#4287f5'
-// 	},
-// 	image: {
-// 		position: 'relative',
-// 		height: 60,
-// 		width: 60,
-// 		'&:hover, &$focusVisible': {
-// 			zIndex: 1,
-// 			'& $imageBackdrop': {
-// 				opacity: 0.15
-// 			},
-// 			'& $imageMarked': {
-// 				opacity: 0
-// 			}
-// 		}
-// 	}
-// }));
-
 const TechnologiesSelection = (props) => {
-	// const classes = useStyles();
-
 	const updateStore = (techlonogy) => {
 		props.setTechlonogySelection(techlonogy);
 	};
+
 	return (
 		<Center className="technology-selection">
 			{images.map((image) => (
