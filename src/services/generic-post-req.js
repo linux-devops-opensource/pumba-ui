@@ -33,18 +33,14 @@ export function fetchDataPost(serviceName, url, requestOption, payload, contentT
 					throw response;
 				}
 				dispatch(decreaseItemsThatLoading());
-				console.log(serviceName, response.json);
-				return response;
+				console.log(serviceName, response.body);
+				return response.json();
 			})
 			.then((items) => {
 				console.log(serviceName, items);
 				dispatch(itemsFetchDataSuccess(requestOption));
-				// TODO find a way to make this better and less specific
 				if (callback) {
-					callback(items);
-				}
-				if (serviceName === 'repository upload') {
-					dispatch(setSuccessResults(items));
+					callback(items, dispatch);
 				}
 			})
 			.catch((err) => {

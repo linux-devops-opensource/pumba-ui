@@ -2,14 +2,16 @@ import { DUPLICATION_FETCH_TYPE } from '../store/types';
 import { fetchDataPost } from './generic-post-req';
 import { CHECKER_URL } from './variables';
 
-// checker
 const serviceName = 'duplication check';
 const contentType = 'application/json';
-
-// const checkerUrl = 'http://20.103.101.183:3000';
 const checkerUrl = CHECKER_URL;
 
-// TODO change this api
+const callback = (items) => {
+	console.log(items);
+	console.log('THIS IS THE CALLBACK FUNC');
+	// TODO change this so it would change the file status
+};
+
 export function fetchDuplicationCheck(hashedPackages, tech, sid) {
 	const brokeDownPkgs = [];
 	for (const p of hashedPackages) {
@@ -31,10 +33,6 @@ export function fetchDuplicationCheck(hashedPackages, tech, sid) {
 	};
 
 	let payload = JSON.stringify(body);
-
-	const callback = (items) => {
-		console.log(items);
-	};
 
 	return (dispatch) => {
 		dispatch(fetchDataPost(serviceName, url, DUPLICATION_FETCH_TYPE, payload, contentType, callback));

@@ -2,7 +2,7 @@ import React from 'react';
 import { Center } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import Stepper from '../Stepper/stepper';
-import ResultsError from './resultsError';
+import ResultsError from '../Errors/resultsError';
 
 const Results = (props) => {
 	if (props.processResults['finished']) {

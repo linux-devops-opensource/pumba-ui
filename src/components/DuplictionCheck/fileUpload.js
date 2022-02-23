@@ -57,19 +57,8 @@ const FileUpload = (props) => {
 		});
 	};
 
-	// const testApi = () => {
-	// 	var date = new Date();
-	// 	var sid = date.getMilliseconds().toString();
-	// 	sid.concat(date.getMilliseconds().toString());
-	// 	props.fetchDuplicationCheck(props.hashedPackages, sid);
-	// 	props.fetchUploadToStorage(props.uploadedPackages[0], sid);
-	// 	props.fetchDependencyCheck(sid);
-	// };
-
 	return (
 		<Box>
-			{/* <Button onClick={testApi}>check</Button> */}
-
 			{/* TODO in the future
 			make this dark mode too 
 			its by mui themes and i kinda dont wanna study those rn lmao
