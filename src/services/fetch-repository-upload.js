@@ -2,20 +2,41 @@ import { REPOSITORY_UPLOAD_FETCH_TYPE } from '../store/types';
 import { fetchDataPost } from './generic-post-req';
 import { UPLOADER_URL } from './variables';
 import { setSuccessResults } from '../store/actions/servicesFetchingActions';
+import { store } from '../store';
+import { setPackageDetails } from '../store/actions/packagesDetailsActions';
+import { setErrorResults } from '../store/actions/servicesFetchingActions';
+import { itemsHasErrored } from '../store/actions/servicesFetchingActions';
 
 const serviceName = 'repository upload';
 const contentType = 'application/json';
 
 const uploaderUrl = UPLOADER_URL;
 
-const callback = (items, dispatch) => {
+const callback = async (items, dispatch) => {
 	console.log('THIS IS THE REPO UPLOAD CALLBACK');
+	const state = store.getState();
+
+	for (const p of items.pkgs) {
+		const info = state.packagesInfo[p.name];
+		if (p.statusCode === 204) {
+			info.info = 'upload successful 🤩';
+			info.failed = false;
+		} else {
+			info.failed = true;
+			info.info = p.info || 'failed during pkg upload';
+		}
+		dispatch(setPackageDetails(info, state.packagesInfo));
+	}
+
 	dispatch(setSuccessResults(items));
 };
 
 export function fetchRepositoryUpload(packagesArray, sid, tech) {
-	const pkgs = packagesArray.map((p) => {
-		return { name: p };
+	const notFailedPkgs = packagesArray.filter((p) => !p.failed);
+	const pkgs = notFailedPkgs.map((p) => {
+		return {
+			name: p.packageName
+		};
 	});
 
 	let url = `${uploaderUrl}/sessions`;

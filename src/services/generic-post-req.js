@@ -47,8 +47,8 @@ export function fetchDataPost(serviceName, url, requestOption, payload, contentT
 				dispatch(itemsHasErrored(true));
 				console.log(serviceName, 'ERROR!!!!!!!!!!!!!!!!!!!!', err);
 
-				err.json().then((erroeMsg) => {
-					dispatch(setErrorResults(serviceName, erroeMsg));
+				err.json().then((errMsg) => {
+					dispatch(setErrorResults(serviceName, errMsg));
 				});
 			});
 	};

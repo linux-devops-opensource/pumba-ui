@@ -65,6 +65,7 @@ const FileUpload = (props) => {
 				let pkgInfo = {
 					packageName: newPackage.packageName,
 					sha1: finalSha,
+					info: 'proccessing~~~',
 					...exctractFileDetails(newPackage.packageName)
 				};
 				props.setPackageDetails(pkgInfo, props.packagesInfo);

@@ -10,20 +10,21 @@ const serviceName = 'duplication check';
 const contentType = 'application/json';
 const checkerUrl = CHECKER_URL;
 
-const callback = (items, dispatch) => {
-	console.log('THIS IS THE CALLBACK FUNC');
+const callback = async (items, dispatch) => {
+	// console.log('THIS IS THE CALLBACK FUNC');
 	const state = store.getState();
 
-	console.log(state.packagesInfo);
 	for (const p of items.pkgs) {
 		const info = state.packagesInfo[`${p.name}-${p.version}.tgz`];
-		if (p.existInTarget) {
+		if (p.existInTarget == true) {
 			info.existInTarget = p.existInTarget;
 			info.info = p.info;
 			info.failed = true;
 		} else {
 			info.existInTarget = false;
+			info.info = 'finished dupe check';
 		}
+		console.log('dupe check ----', info.info);
 		dispatch(setPackageDetails(info, state.packagesInfo));
 	}
 
@@ -31,7 +32,6 @@ const callback = (items, dispatch) => {
 		console.log(p);
 		return p.existInTarget;
 	});
-	console.log('dupes ', duplicatePkgs);
 
 	if (duplicatePkgs.length === Object.values(state.packagesInfo).length) {
 		dispatch(itemsHasErrored(true));
@@ -40,23 +40,15 @@ const callback = (items, dispatch) => {
 };
 
 export function fetchDuplicationCheck(hashedPackages, tech, sid) {
-	const brokeDownPkgs = [];
-	for (const p of hashedPackages) {
-		let name = p.packageName.substring(0, p.packageName.lastIndexOf('.'));
-		let lastIndexOfHyper = name.lastIndexOf('-');
-		brokeDownPkgs.push({
-			name: name.substring(0, lastIndexOfHyper),
-			version: name.substring(lastIndexOfHyper + 1),
-			sha1: p.sha1
-		});
-	}
-
+	const pkgs = Object.values(hashedPackages).map((p) => {
+		return { name: p.name, version: p.version, sha1: p.sha1 };
+	});
 	let url = `${checkerUrl}/session`;
 	let body = {
 		sid: sid,
 		type: tech,
 		statusCode: 200,
-		pkgs: brokeDownPkgs
+		pkgs: pkgs
 	};
 
 	let payload = JSON.stringify(body);

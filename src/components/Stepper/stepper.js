@@ -14,6 +14,7 @@ const Stepper = (props) => {
 
 	let sid = props.sessionId;
 	let tech = props.technologySelected;
+	let pkgsInfo = props.packagesInfo;
 
 	// step 0 -- trigger session id created
 	React.useEffect(() => {
@@ -35,7 +36,7 @@ const Stepper = (props) => {
 	React.useEffect(
 		() => {
 			if (props.storageBucketCreation['finished'] == true) {
-				props.fetchDuplicationCheck(props.hashedPackages, tech, sid);
+				props.fetchDuplicationCheck(pkgsInfo, tech, sid);
 			}
 		},
 		[ props.storageBucketCreation ]
@@ -45,11 +46,12 @@ const Stepper = (props) => {
 	React.useEffect(
 		() => {
 			if (props.duplicationCheck['finished'] == true && props.processResults['finished'] == false) {
-				// props.createStorageBucket(props.hashedPackages, tech, sid).then(() => {
 				props.uploadedPackages.forEach((singlePackage) => {
-					props.fetchUploadToStorage(singlePackage, sid);
+					console.log(pkgsInfo[singlePackage.name]);
+					if (!pkgsInfo[singlePackage.name].failed) {
+						props.fetchUploadToStorage(singlePackage, sid);
+					}
 				});
-				// });
 			}
 		},
 		[ props.duplicationCheck ]
@@ -58,7 +60,7 @@ const Stepper = (props) => {
 	// // step 3 -- fetch the validator
 	// React.useEffect(
 	// 	() => {
-	// 		if (props.uploadToStorageManager['finished'] == true) {
+	// 		if (props.uploadToStorageManager['finished'] == true && props.processResults['finished'] == false) {
 	// 			props.fetchDependencyCheck(props.hashedPackages, tech, sid);
 	// 		}
 	// 	},
@@ -68,9 +70,13 @@ const Stepper = (props) => {
 	// step 4 -- fetch the repository upload
 	React.useEffect(
 		() => {
-			// if (props.dependencyCheck['finished'] == true) {
-			if (props.uploadToStorageManager['finished'] == true && props.processResults['finished'] == false) {
-				props.fetchRepositoryUpload(props.uploadedPackages.map((a) => a.name), sid, tech);
+			const uploaded = Object.values(pkgsInfo).filter((p) => p.uploadedIntoStorage);
+			const notFailedSoFar = Object.values(pkgsInfo).filter((p) => p.failed);
+			if (uploaded.length === notFailedSoFar.length) {
+				// if (props.dependencyCheck['finished'] == true && props.processResults['finished'] == false) {
+				if (props.uploadToStorageManager['finished'] == true && props.processResults['finished'] == false) {
+					props.fetchRepositoryUpload(Object.values(pkgsInfo), sid, tech);
+				}
 			}
 		},
 		// [ props.dependencyCheck ]
@@ -115,7 +121,8 @@ const mapStateToProps = (state) => {
 		repositoryUpload: state.repositoryUpload,
 		sessionId: state.sessionId,
 		storageBucketCreation: state.storageBucketCreation,
-		processResults: state.processResults
+		processResults: state.processResults,
+		packagesInfo: state.packagesInfo
 	};
 };
 
@@ -130,6 +137,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(fetchUploadToStorage(uploadedPackages, sid, tech)),
 		setSessionId: () => dispatch(setSessionId()),
 		createStorageBucket: (hashedPackages, tech, sid) => dispatch(createStorageBucket(hashedPackages, tech, sid))
+		// itemsFetchDataCustom: (requestOption, custom) => dispatch(itemsFetchDataCustom(requestOption, custom))
 	};
 };
 

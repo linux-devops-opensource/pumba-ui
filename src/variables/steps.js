@@ -1,7 +1,7 @@
-// import FileUpload from '../components/DuplictionCheck/fileUpload';
-import Results from '../components/Results/results';
+// import Results from '../components/Results/results';
 import TechnologiesSelection from '../components/Uploader/technologiesSelection';
 import Wrapper from '../components/DuplictionCheck/fileUploadWrapper';
+import Status from '../components/Results/status';
 
 // whats the point of this tho ?? TODO
 function verify1() {
@@ -35,7 +35,7 @@ export const stepsw = [
 		Name: 'results',
 		description: 'try to upload and pray! 🙌',
 		After_Display: '',
-		Display: <Results />,
+		Display: <Status />,
 		Verifier: verify1
 	}
 ];

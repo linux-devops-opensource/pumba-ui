@@ -9,6 +9,8 @@ const contentType = 'application/json';
 // const validatorUrl = 'http://20.103.212.101:3000';
 const validatorUrl = VALIDATOR_URL;
 
+// TODO create callback here
+
 export function fetchDependencyCheck(packages, tech, sessionId) {
 	const brokeDownPkgs = [];
 	for (const p of packages) {

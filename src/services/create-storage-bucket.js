@@ -10,10 +10,10 @@ const storageManagerUrl = STORAGE_MANAGER_URL;
 
 export function createStorageBucket(hashedPackages, tech, sid) {
 	let pkgs = hashedPackages.map((p) => {
-		console.log(p);
+		// console.log(p);
 		return { name: p.packageName };
 	});
-	console.log(pkgs);
+	// console.log(pkgs);
 	let url = `${storageManagerUrl}/sessions`;
 	let body = {
 		sid: sid,
@@ -21,8 +21,8 @@ export function createStorageBucket(hashedPackages, tech, sid) {
 		pkgs: hashedPackages
 	};
 
-	console.log(body);
-	console.log('TRYING TO CREATE!!');
+	// console.log(body);
+	// console.log('TRYING TO CREATE!!');
 	let payload = JSON.stringify(body);
 
 	return (dispatch) => {
