@@ -95,6 +95,7 @@ const FileUpload = (props) => {
 						showFileNamesInPreview={true}
 						dialogTitle={'Duplicate checker'}
 						dropzoneText={'Upload your packages'}
+						filesLimit={300}
 					/>
 				</Container>
 			</Center>

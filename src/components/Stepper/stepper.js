@@ -15,6 +15,7 @@ const Stepper = (props) => {
 	let sid = props.sessionId;
 	let tech = props.technologySelected;
 	let pkgsInfo = props.packagesInfo;
+	let repoUploadDispatched = false;
 
 	// step 0 -- trigger session id created
 	React.useEffect(() => {
@@ -70,11 +71,16 @@ const Stepper = (props) => {
 	// step 4 -- fetch the repository upload
 	React.useEffect(
 		() => {
+			// if (props.uploadToStorageManager['finished'] == true && props.processResults['finished'] == false) {
+			// 	props.fetchRepositoryUpload(Object.values(pkgsInfo), sid, tech);
+			// }
+
 			const uploaded = Object.values(pkgsInfo).filter((p) => p.uploadedIntoStorage);
-			const notFailedSoFar = Object.values(pkgsInfo).filter((p) => p.failed);
-			if (uploaded.length === notFailedSoFar.length) {
+			const notFailedSoFar = Object.values(pkgsInfo).filter((p) => !p.failed);
+			if (uploaded.length === notFailedSoFar.length && !repoUploadDispatched) {
 				// if (props.dependencyCheck['finished'] == true && props.processResults['finished'] == false) {
 				if (props.uploadToStorageManager['finished'] == true && props.processResults['finished'] == false) {
+					repoUploadDispatched = true;
 					props.fetchRepositoryUpload(Object.values(pkgsInfo), sid, tech);
 				}
 			}

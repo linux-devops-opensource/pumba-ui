@@ -14,6 +14,7 @@ const uploaderUrl = UPLOADER_URL;
 
 const callback = async (items, dispatch) => {
 	console.log('THIS IS THE REPO UPLOAD CALLBACK');
+	console.log(items);
 	const state = store.getState();
 
 	for (const p of items.pkgs) {
@@ -33,6 +34,7 @@ const callback = async (items, dispatch) => {
 
 export function fetchRepositoryUpload(packagesArray, sid, tech) {
 	const notFailedPkgs = packagesArray.filter((p) => !p.failed);
+	console.log('attempting repo upload', notFailedPkgs.length);
 	const pkgs = notFailedPkgs.map((p) => {
 		return {
 			name: p.packageName

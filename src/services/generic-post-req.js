@@ -25,7 +25,8 @@ export function fetchDataPost(serviceName, url, requestOption, payload, contentT
 		const requestOpts = {
 			headers: headers,
 			method: 'POST',
-			body: payload
+			body: payload,
+			timeout: 600000
 		};
 		fetch(url, requestOpts)
 			.then((response) => {
