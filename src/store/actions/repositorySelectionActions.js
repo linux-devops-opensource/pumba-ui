@@ -1,13 +1,10 @@
-export function set(repository) {
-    return {
-        type: 'SET_REPOSITORY_SELECTION',
-        repository
-    }
-        
-}
+import { SET_REPOSITORY_SELECTION_TYPE } from '../types';
 
 export function setRepositorySelection(repository) {
-    return (dispatch) => {
-        dispatch(set(repository));        
-    };
+	return (dispatch) => {
+		dispatch({
+			type: SET_REPOSITORY_SELECTION_TYPE,
+			repository
+		});
+	};
 }

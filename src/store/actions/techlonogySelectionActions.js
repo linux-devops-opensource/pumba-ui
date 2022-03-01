@@ -1,13 +1,10 @@
-export function set(techlonogy) {
-    return {
-        type: 'SET_TECHNOLOGY_SELECTION',
-        techlonogy
-    }
-        
-}
+import { SET_TECHNOLOGY_SELECTION_TYPE } from '../types';
 
 export function setTechlonogySelection(techlonogy) {
-    return (dispatch) => {
-        dispatch(set(techlonogy));        
-    };
+	return (dispatch) => {
+		dispatch({
+			type: SET_TECHNOLOGY_SELECTION_TYPE,
+			techlonogy
+		});
+	};
 }

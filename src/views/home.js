@@ -1,160 +1,93 @@
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Step from '@material-ui/core/Step';
-import StepContent from '@material-ui/core/StepContent';
-import StepLabel from '@material-ui/core/StepLabel';
-import Stepper from '@material-ui/core/Stepper';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { Text, Button, Flex, Box, Grid, Center, Heading } from '@chakra-ui/react';
+import { Step, Steps, useSteps } from 'chakra-ui-steps';
+// DOCUMENTATION -- THANK GOD FOR THIS GUY https://jeanverster.github.io/chakra-ui-steps-site/
+
 import React from 'react';
-import FileUpload from '../components/DuplactionCheck/fileUpload';
-import Results from '../components/Results/results';
-import TechnologiesSelection from '../components/Uploader/technologiesSelection';
-let stepsw = [
-    {
-        Name: "Select Technology",
-        After_Display: "",
-        Display: <TechnologiesSelection/>,
-        Verifier: verify1
-    },
-    // {
-    //     Name: 'Select Repository Manager',
-    //     After_Display: '',
-    //     Display: <RepositorySelection/>,        
-    //     Verifier: verify1
-    // },
-    {
-        Name: 'Upload packages',
-        After_Display: '',
-        Display: <FileUpload/>,        
-        Verifier: verify1
-    },
-    {
-        Name: 'Results',
-        After_Display: '',
-        Display: <Results/>,        
-        Verifier: verify1
-    }
-
-]
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
-  button: {
-    marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  actionsContainer: {
-    marginBottom: theme.spacing(2),
-  },
-  resetContainer: {
-    padding: theme.spacing(3),
-  },
-}));
-
-function getSteps() {
-  return stepsw
-}
-
-function verify1() {
-    return true
-}
-
-
+import { connect } from 'react-redux';
+import { stepsw } from '../variables/steps';
 
 const Home = (props) => {
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  stepsw = getSteps()
+	const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
+		initialStep: 0
+	});
 
-  const handleNext = () => {
-    if (stepsw[activeStep].Verifier()) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    }   
-  };
+	let results = props.processResults['finished'] || false;
 
-  const handleBack = () => {    
-   
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-   
-  };
+	const handleFinish = () => {
+		window.location.reload();
+	};
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+	return (
+		<Grid column className="home-component" width="100%" height="100%">
+			<Box p="7">
+				<Steps activeStep={activeStep} orientation="horizontal">
+					{stepsw.map(
+						(s, index) =>
+							index != stepsw.length ? (
+								<Step
+									key={index}
+									label={s.Name}
+									p="5"
+									justifyContent="center"
+									description={s.description}
+								>
+									{s.Display}
+								</Step>
+							) : (
+								<Step
+									key={index}
+									label={s.Name}
+									p="5"
+									justifyContent="center"
+									description={s.description}
+									// isCompletedStep={results}
+								>
+									{s.Display}
+								</Step>
+							)
+					)}
+				</Steps>
+			</Box>
+			<Box className="classes.actionsContainer" p="6">
+				<div>
+					{activeStep === stepsw.length - 1 ? (
+						<Flex p={4}>
+							{/* <Button mx="auto" size="sm" onClick={handleFinish}>
+								Reset
+							</Button> */}
+						</Flex>
+					) : (
+						<Flex width="100%" justify="flex-end">
+							<Button isDisabled={activeStep === 0} mr={4} onClick={prevStep} size="sm" variant="ghost">
+								Prev
+							</Button>
+							<Button size="sm" onClick={nextStep}>
+								{activeStep === stepsw.length - 2 ? 'Finish' : 'Next'}
+							</Button>
+						</Flex>
+					)}
+				</div>
+			</Box>
+			{activeStep === stepsw.length - 1 &&
+			results == true && (
+				<Center>
+					{/* <Box>
+						<Text>All steps completed - you&apos;re finished </Text> {' '}
+					</Box> */}
+					<Button onClick={handleFinish} className="reset-pumba">
+						reset this page
+					</Button>
+				</Center>
+			)}
+		</Grid>
+	);
+};
 
-  const handleFinish = () => {
-    window.location.reload()
+const mapStateToProps = (state) => {
+	return {
+		technologySelected: state.technologySelected,
+		processResults: state.processResults
+	};
+};
 
-  };
-
-  return (
-    <div className={classes.root}>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {stepsw.map((label, index) => (
-          <Step key={label.Name}>
-            <StepLabel>
-                <div>
-                {label.Name}
-                {index < activeStep ? label.After_Display : ''}
-                </div>
-            </StepLabel>
-            
-            <StepContent>              
-            {label.Display}
-              <div className={classes.actionsContainer}>
-                <div>
-                    {activeStep === stepsw.length - 1 ? 
-                    <div>
-                      <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleFinish}
-                    className={classes.button}
-                  >
-                     Refresh
-                  </Button>
-                    </div> 
-                    :
-                    <div>
-                      <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    className={classes.button}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                     Next
-                  </Button>
-
-                    </div> }          
-                      
-                 
-                
-                </div>
-              </div>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-      {activeStep === stepsw.length && (
-        <Paper square elevation={0} className={classes.resetContainer}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={handleReset} className={classes.button}>
-            Reset
-          </Button>
-        </Paper>
-      )}
-    </div>
-  );
-}
-
-export default Home
+export default connect(mapStateToProps)(Home);

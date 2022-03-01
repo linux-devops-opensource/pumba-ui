@@ -1,16 +1,12 @@
-export function set(sessionId) {
-    return {
-        type: 'SET_SESSION_ID',
-        sessionId
-    }
-        
-}
+import { SET_SESSION_ID_TYPE } from '../types';
 
 export function setSessionId() {
-    const sessionId = Math.random().toString(36).substring(7); 
+	const sessionId = Math.random().toString(36).substring(7);
 
-    return (dispatch) => {
-        dispatch(set(sessionId));        
-    };
-
+	return (dispatch) => {
+		dispatch({
+			type: SET_SESSION_ID_TYPE,
+			sessionId
+		});
+	};
 }

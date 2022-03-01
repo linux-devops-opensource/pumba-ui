@@ -1,13 +1,10 @@
-export function set(result) {
-    return {
-        type: 'SET_RESULTS',
-        result
-    }
-        
-}
+import { SET_RESULTS_TYPE } from '../types';
 
-export function setTechlonogySelection(techlonogy) {
-    return (dispatch) => {
-        dispatch(set(techlonogy));        
-    };
+export function setResults(result) {
+	return (dispatch) => {
+		dispatch({
+			type: SET_RESULTS_TYPE,
+			result
+		});
+	};
 }
