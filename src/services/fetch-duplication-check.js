@@ -18,7 +18,7 @@ const callback = async (items, dispatch) => {
 		const info = state.packagesInfo[`${p.name}-${p.version}.tgz`];
 		if (p.existInTarget == true) {
 			info.existInTarget = p.existInTarget;
-			info.info = p.info;
+			info.info = p.info || 'already exists in target';
 			info.failed = true;
 		} else {
 			info.existInTarget = false;
